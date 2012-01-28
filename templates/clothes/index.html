@@ -1,0 +1,10 @@
+{% if dates %}
+    <ul>
+    {% for date in dates %}
+        <li><a href="date/{{ date.date }}/">{{ date.date }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No dates are available.</p>
+{% endif %}
+
