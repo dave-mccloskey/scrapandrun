@@ -1,10 +1,35 @@
+{% extends "clothes/base_clothes.html" %}
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
 {% if dates %}
-    <ul>
-    {% for date in dates %}
-        <li><a href="date/{{ date.date }}/">{{ date.date }}</a></li>
-    {% endfor %}
-    </ul>
+<h3>Dates</h3>
+<ul>
+{% for date in dates %}
+  <li><a href="date/{{ date.id }}/">{{ date.date }}</a></li>
+{% endfor %}
+</ul>
 {% else %}
     <p>No dates are available.</p>
 {% endif %}
+
+{% if outfits %}
+<h3>Outfits</h3>
+<ul>
+{% for outfit in outfits %}
+  <li><a href="outfit/{{outfit.id}}/">{{ outfit }}</a></li>
+{% endfor %}
+</ul>
+{% endif %}
+
+{% if articles %}
+<h3>Articles</h3>
+<ul>
+{% for article in articles %}
+  <li><a href="article/{{article.id}}/">{{ article }}</a></li>
+{% endfor %}
+</ul>
+{% endif %}
+{% endblock content %}
 

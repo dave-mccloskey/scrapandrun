@@ -1,0 +1,15 @@
+{% extends "clothes/base_clothes.html" %}
+
+{% block title %}{{ color.name }}{% endblock title %}
+
+{% block content %}
+<h1>{{ color.name }}</h1>
+<p>Base Color: <a href="/clothes/base_color/{{color.basic_color}}">{{ color.get_basic_color_display }}</a></p>
+<h3>Articles:</h3>
+<ul>
+{% for article in color.articles.all %}
+  <li><a href="/clothes/article/{{article.id}}">{{ article.name }}</a></li>
+{% endfor %}
+</ul>
+{% endblock content %}
+

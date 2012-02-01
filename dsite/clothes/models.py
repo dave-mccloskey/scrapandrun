@@ -37,8 +37,8 @@ class ArticleType(models.Model):
 class Article(models.Model):
     name = models.CharField(max_length=200)
     purchase_date = models.DateField('date purchased')
-    color = models.ManyToManyField(Color)
-    article_type = models.ForeignKey(ArticleType, verbose_name='type')
+    color = models.ManyToManyField(Color, related_name='articles')
+    article_type = models.ForeignKey(ArticleType, verbose_name='type', related_name='articles')
     
 
     def __unicode__(self):
@@ -46,15 +46,18 @@ class Article(models.Model):
 
 
 class Outfit(models.Model):
-    articles = models.ManyToManyField(Article)
+    articles = models.ManyToManyField(Article, related_name='outfits')
     
     def __unicode__(self):
         return str(self.id) + ": " + ', '.join((f.__unicode__() for f in self.articles.all()))
     
     
 class Date(models.Model):
-    date = models.DateField('date purchased', unique=True)
-    outfits_worn = models.ManyToManyField(Outfit)
+    date = models.DateField('date', unique=True)
+    outfits_worn = models.ManyToManyField(Outfit, related_name='dates')
+    
+    def get_date_id(self):
+        return str(self.date)
     
     def __unicode__(self):
         return str(self.date)

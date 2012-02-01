@@ -1,0 +1,13 @@
+{% extends "clothes/base_clothes.html" %}
+
+{% block title %}{{ articletype.name }}{% endblock title %}
+
+{% block content %}
+<h1>{{ articletype.name }}</h1>
+<h3>Articles:</h3>
+<ul>
+{% for article in articletype.articles.all %}
+  <li><a href="/clothes/article/{{article.id}}">{{ article.name }}</a></li>
+{% endfor %}
+</ul>
+{% endblock content %}

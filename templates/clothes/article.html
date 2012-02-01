@@ -1,0 +1,24 @@
+{% extends "clothes/base_clothes.html" %}
+
+{% block title %}{{ article.name }}{% endblock title %}
+
+{% block content %}
+<h1>{{ article.name }}</h1>
+<p><a href="/clothes/article_type/{{article.article_type.id}}">{{ article.article_type }}</a></p>
+<p>Purshased on: {{ article.purchase_date|date:'Y-m-d' }}</p>
+
+<h3>Colors</h3>
+<ul>
+  {% for color in article.color.all %}
+    <li><a href="/clothes/color/{{color.id}}">{{ color.name }}</a></li>
+  {% endfor %}
+</ul>
+
+<ul>
+{% for article in outfit.articles.all %}
+  <li>
+      <a href="/clothes/article/{{article.id}}/">{{article.name}}</a>
+  </li>
+{% endfor %}
+</ul>
+{% endblock content %}

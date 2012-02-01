@@ -1,21 +1,28 @@
 from django.conf.urls.defaults import *
 from django.views.generic import DetailView, ListView
-from clothes.models import Date
+from clothes.models import *
 
-urlpatterns = patterns('',
-    url(r'^$',
-        ListView.as_view(
-            queryset=Date.objects.all(),
-            context_object_name='dates',
-            template_name='clothes/index.html')),
-#    url(r'^(?P<pk>\d+)/$',
-#        DetailView.as_view(
-#            model=Poll,
-#            template_name='polls/detail.html')),
-#    url(r'^(?P<pk>\d+)/results/$',
-#        DetailView.as_view(
-#            model=Poll,
-#            template_name='polls/results.html'),
-#        name='poll_results'),
-#    url(r'^(?P<poll_id>\d+)/vote/$', 'polls.views.vote'),
+urlpatterns = patterns('clothes.views',
+    url(r'^$', 'overview'),
+    url(r'^date/(?P<pk>\d+)/$',
+        DetailView.as_view(
+            model=Date,
+            template_name='clothes/date.html')),
+    url(r'^outfit/(?P<pk>\d+)/$',
+        DetailView.as_view(
+            model=Outfit,
+            template_name='clothes/outfit.html')),
+    url(r'^article/(?P<pk>\d+)/$',
+        DetailView.as_view(
+            model=Article,
+            template_name='clothes/article.html')),
+    url(r'^article_type/(?P<pk>\d+)/$',
+        DetailView.as_view(
+            model=ArticleType,
+            template_name='clothes/article_type.html')),
+    url(r'^color/(?P<pk>\d+)/$',
+        DetailView.as_view(
+            model=Color,
+            template_name='clothes/color.html')),
+    #url(r'^basic_color/(?P<pk>\w+)/$', 'basic_color'),
 )

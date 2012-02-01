@@ -1,0 +1,21 @@
+{% extends "clothes/base_clothes.html" %}
+
+{% block title %}Outfit #{{ outfit.id }}{% endblock title %}
+
+{% block content %}
+<h1>Outfit #{{ outfit.id }}</h1>
+
+<h3>Articles</h3>
+<ul>
+{% for article in outfit.articles.all %}
+  <li><a href="/clothes/article/{{article.id}}">{{ article.name }}</a></li>
+{% endfor %}
+</ul>
+
+<h3>Dates Worn</h3>
+<ul>
+{% for date in outfit.dates.all %}
+  <li><a href="/clothes/date/{{date.id}}">{{ date.date|date:'Y-m-d' }}</a></li>
+{% endfor %}
+</ul>
+{% endblock content %}
