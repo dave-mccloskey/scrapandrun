@@ -2,23 +2,52 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-    <link rel="stylesheet" href="/css/style.css" />
     <title>{% block title %}{% endblock %} - {% block section_title %}{% endblock %} - Scrap and Run</title>
+    
+    <link href="/static/bs/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+    </style>
+    <link href="/static/bs/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
 </head>
 
 <body>
-    <div id="sidebar">
-        {% block sidebar %}
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/clothes/">Clothes</a></li>
-        </ul>
-        {% endblock %}
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="i-bar"></span>
+          <span class="i-bar"></span>
+          <span class="i-bar"></span>
+        </a>
+        <a class="brand" href="/">Scrap and Run</a>
+        <div class="nav-collapse">
+          <ul class="nav">
+            {% block navbar %}
+              <li><a href="/">Home</a></li>
+              <li><a href="/clothes/">Clothes</a></li>
+            {% endblock %}
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
     </div>
-
+  </div>
+  
+  
+  <div class="container">
     <div id="content">
-        {% block content %}{% endblock %}
+      {% block content %}{% endblock content %}
     </div>
+  </div>
+  
+    <!-- Javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/static/bs/js/bootstrap.js"></script>
 </body>
 </html>
 
