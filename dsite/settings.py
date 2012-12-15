@@ -123,6 +123,8 @@ INSTALLED_APPS = (
      'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+    # South DB Migration Tool (easy_install South -- http://south.aeracode.org/)
+    'south',
 )
 
 # A sample logging configuration. The only tangible logging

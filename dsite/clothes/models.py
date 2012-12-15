@@ -21,14 +21,12 @@ class Color(models.Model):
     name = models.CharField(max_length=200)
     basic_color = models.CharField(max_length=2, choices=BASIC_COLORS)
 
-
     def __unicode__(self):
         return self.name + " (" + self.get_basic_color_display() + ")"
 
 
 class ArticleType(models.Model):
     name = models.CharField(max_length=50)
-    
     
     def __unicode__(self):
         return self.name
@@ -39,8 +37,9 @@ class Article(models.Model):
     purchase_date = models.DateField('date purchased')
     color = models.ManyToManyField(Color, related_name='articles')
     article_type = models.ForeignKey(ArticleType, verbose_name='type', related_name='articles')
+    cost = models.DecimalField(max_digits=6, decimal_places=2)
+    size = models.CharField(max_length=30)
     
-
     def __unicode__(self):
         return self.name
 
