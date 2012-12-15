@@ -64,6 +64,9 @@ class Outfit(models.Model):
 class AccessorizedOutfit(models.Model):
     base_outfit = models.ForeignKey(Outfit, verbose_name='base outfit', related_name='accessorized_outfits')
     articles = models.ManyToManyField(Article, related_name='accessorized_outfits')
+    
+    def __unicode__(self):
+        return str(self.id) + ': Outfit[' + str(self.base_outfit) + '] ' + ', '.join((f.__unicode__() for f in self.articles.all()))
 
 
 class Date(models.Model):

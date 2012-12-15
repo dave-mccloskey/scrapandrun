@@ -5,7 +5,9 @@
 {% block content %}
 <h1>{{ article.name }}</h1>
 <p><a href="/clothes/article_type/{{article.article_type.id}}">{{ article.article_type }}</a></p>
-<p>Purshased on: {{ article.purchase_date|date:'Y-m-d' }}</p>
+<p>Purchased on {{ article.purchase_date|date:'M d, Y' }}
+	from {{ article.purchase_location }}
+	for ${{ article.cost }}</p>
 
 <h3>Colors</h3>
 <ul>

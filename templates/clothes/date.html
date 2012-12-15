@@ -8,11 +8,15 @@
 <h2>Outfits worn:</h2>
 <ul>
 {% for outfit in date.outfits_worn.all %}
-    <li>
-        <a href="/clothes/outfit/{{outfit.id}}/">{{outfit.id}}</a>: 
-        {% for article in outfit.articles.all %}
-          <a href="/clothes/article/{{article.id}}/">{{article.name}}</a>
+    {% for article in outfit.base_outfit.articles.all %}
+      <li><a href="/clothes/article/{{article.id}}/">{{article.name}}</a></li>
+    {% endfor %}
+    <li>Accessories
+	  <ul>
+		{% for article in outfit.articles.all %}
+          <li><a href="/clothes/article/{{article.id}}/">{{article.name}}</a></li>
         {% endfor %}
+      </ul>
     </li>
 {% endfor %}
 </ul>
