@@ -2,6 +2,14 @@ from django.db import models
 import datetime
 
 
+class Store(models.Model):
+    name = models.CharField(max_length=50)
+    location = models.CharField(max_length=100)
+    
+    def __unicode__(self):
+        return self.name + ' (' + self.location + ')'
+
+
 class Color(models.Model):
     BASIC_COLORS = (
         (u'RD', u'Red'),
@@ -39,6 +47,8 @@ class Article(models.Model):
     article_type = models.ForeignKey(ArticleType, verbose_name='type', related_name='articles')
     cost = models.DecimalField(max_digits=6, decimal_places=2)
     size = models.CharField(max_length=30)
+    purchase_location = models.ForeignKey(Store, verbose_name='purchase location',
+        related_name='articles', on_delete=models.PROTECT)
     
     def __unicode__(self):
         return self.name
@@ -49,16 +59,19 @@ class Outfit(models.Model):
     
     def __unicode__(self):
         return str(self.id) + ": " + ', '.join((f.__unicode__() for f in self.articles.all()))
-    
-    
+
+
+class AccessorizedOutfit(models.Model):
+    base_outfit = models.ForeignKey(Outfit, verbose_name='base outfit', related_name='accessorized_outfits')
+    articles = models.ManyToManyField(Article, related_name='accessorized_outfits')
+
+
 class Date(models.Model):
     date = models.DateField('date', unique=True)
-    outfits_worn = models.ManyToManyField(Outfit, related_name='dates')
+    outfits_worn = models.ManyToManyField(AccessorizedOutfit, related_name='dates_worn')
     
     def get_date_id(self):
         return str(self.date)
     
     def __unicode__(self):
         return str(self.date)
-    
-    
