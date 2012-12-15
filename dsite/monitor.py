@@ -1,0 +1,6 @@
+# Handles restart python process in apache
+
+if environ['mod_wsgi.process_group'] != '':
+    import signal, os
+    os.kill(os.getpid(), signal.SIGINT)
+
