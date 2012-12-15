@@ -11,3 +11,6 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'dsite.settings'
 import django.core.handlers.wsgi
 application = django.core.handlers.wsgi.WSGIHandler()
 
+import dsite.monitor
+dsite.monitor.start(interval=1.0)
+
