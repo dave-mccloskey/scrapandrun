@@ -2,7 +2,10 @@
 
 {% block title %}Home{% endblock title %}
 
+{% block css %}<link rel="stylesheet" href="/static/js/closure-library/closure/goog/css/autocomplete.css">{% endblock css %}
+
 {% block content %}
+<input type="text" id="searchText">
 {% if dates %}
 <h3>Dates</h3>
 <ul>
@@ -32,4 +35,14 @@
 </ul>
 {% endif %}
 {% endblock content %}
+
+{% block js %}
+<script>
+goog.require('goog.ui.ac.Remote');
+</script>
+<script>
+var input = document.getElementById('searchText');
+var ac = new goog.ui.ac.Remote('/clothes/search/', input);
+</script>
+{% endblock js %}
 

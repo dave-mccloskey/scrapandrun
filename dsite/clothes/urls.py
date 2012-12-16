@@ -24,5 +24,6 @@ urlpatterns = patterns('clothes.views',
         DetailView.as_view(
             model=Color,
             template_name='clothes/color.html')),
+    url(r'^search/', 'search'),
     #url(r'^basic_color/(?P<pk>\w+)/$', 'basic_color'),
 )
