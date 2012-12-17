@@ -3,21 +3,25 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from clothes.models import *
+from django.db.models import Q
 
 
 def overview(request):
   return render_to_response('clothes/index.html', {
-    'dates': Date.objects.all(),
+    'dates': Date.objects.all().order_by('date'),
     'outfits': Outfit.objects.all(),
-    'articles': Article.objects.all()
+    'articles': Article.objects.all().order_by('name')
   })
 
 
 def search(request):
+  result = ''
   token = request.GET['token']
   max_matches = request.GET['max_matches']
+  
   articles = Article.objects.filter(name__icontains=token)[:max_matches]
-  result = '["' + '", "'.join((a.name for a in articles)) + '"]'
+  if articles:
+    result += '["' + '", "'.join((a.name for a in articles)) + '"]'
   return HttpResponse(result)
 
 #def basic_color(request, basic_color_id):

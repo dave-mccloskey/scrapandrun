@@ -125,6 +125,8 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     # South DB Migration Tool (easy_install South -- http://south.aeracode.org/)
     'south',
+    # Autocomplete Light (https://github.com/yourlabs/django-autocomplete-light)
+    'autocomplete_light',
 )
 
 # A sample logging configuration. The only tangible logging
