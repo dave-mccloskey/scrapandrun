@@ -12,10 +12,31 @@
 {% endfor %}
 </ul>
 
-<h3>Dates Worn</h3>
+<h3>This outfit is used in these accessorized outfits:</h3>
 <ul>
-{% for date in outfit.dates.all %}
-  <li><a href="/clothes/date/{{date.id}}">{{ date.date|date:'Y-m-d' }}</a></li>
+{% for aoutfit in outfit.accessorized_outfits.all %}
+  <li><a href="/clothes/aoutfit/{{aoutfit.id}}">Accessorized Outfit #{{ aoutfit.id }}</a>
+  <ul>
+  <li>Dates Worn
+    <ul>
+    {% if aoutfit.dates_worn %}
+      {% for date in aoutfit.dates_worn.all %}
+        <li><a href="/clothes/date/{{date.id}}">{{ date.date|date:'Y-m-d' }}</a></li>
+      {% endfor %}
+    {% endif %}
+    </ul>
+  </li>
+  
+    <li>Articles
+      <ul>
+        {% for article in aoutfit.articles.all %}
+          <li><a href="/clothes/article/{{article.id}}">{{ article }}</a></li>
+        {% endfor %}
+      </ul>
+    </li>
+  </ul>
+  </li>
 {% endfor %}
 </ul>
 {% endblock content %}
+
