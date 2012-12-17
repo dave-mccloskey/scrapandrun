@@ -62,6 +62,12 @@ class Article(models.Model):
     class Meta:
         ordering = ['name']
     
+    
+    def worn_with(self):
+        articles = (Article.objects.filter(outfits__articles__id=self.id) |
+            Article.objects.filter(accessorized_outfits__articles__id=self.id))
+        return articles.exclude(id=self.id).order_by('name')
+    
     def __unicode__(self):
         return self.name
 
@@ -95,3 +101,4 @@ class Date(models.Model):
     
     def __unicode__(self):
         return str(self.date)
+

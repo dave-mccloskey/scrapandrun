@@ -16,11 +16,33 @@
   {% endfor %}
 </ul>
 
+<h3>Worn With</h3>
 <ul>
-{% for article in outfit.articles.all %}
-  <li>
-      <a href="/clothes/article/{{article.id}}/">{{article.name}}</a>
-  </li>
+{% for article in article.worn_with %}
+  <li><a href="/clothes/article/{{article.id}}">{{ article.name }}</a></li>
 {% endfor %}
 </ul>
+
+{% if article.outfits.all %}
+  <h3>Outfits</h3>
+  <ul>
+  {% for outfit in article.outfits.all %}
+    <li>
+        <a href="/clothes/outfit/{{outfit.id}}/">{{ outfit }}</a>
+    </li>
+  {% endfor %}
+  </ul>
+{% endif %}
+
+{% if article.accessorized_outfits.all %}
+  <h3>Accessorized Outfits</h3>
+  <ul>
+  {% for aoutfit in article.accessorized_outfits.all %}
+    <li>
+        <a href="/clothes/aoutfit/{{aoutfit.id}}/">{{ aoutfit }}</a>
+    </li>
+  {% endfor %}
+  </ul>
+{% endif %}
+
 {% endblock content %}
