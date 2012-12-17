@@ -1,39 +1,45 @@
-from clothes.models import Date, Outfit, Article, Color, ArticleType, AccessorizedOutfit, Store
+from clothes.models import *
 from django.contrib import admin
 
 
-class ClothesAdmin(admin.ModelAdmin):
-    pass
+class DateAdmin(admin.ModelAdmin):
+  pass
 
 
 class OutfitAdmin(admin.ModelAdmin):
-    pass
+  filter_horizontal = ['articles',]
+  search_fields = ['articles__name',]
 
 
 class ArticleAdmin(admin.ModelAdmin):
-    pass
+  filter_horizontal = ['color',]
+  
+  list_display = ['name', 'article_type', 'purchase_date', 'cost', 'size',]
+  search_fields = ['name', 'article_type__name',]
 
 
 class ColorAdmin(admin.ModelAdmin):
-    pass
+  search_fields = ['name',]
 
 
 class ArticleTypeAdmin(admin.ModelAdmin):
-    pass
+  pass
 
 
 class AccessorizedOutfitAdmin(admin.ModelAdmin):
-    pass
+  search_fields = ['base_outfit__articles__name', 'articles__name']
+  filter_horizontal = ['articles',]
 
 
 class StoreAdmin(admin.ModelAdmin):
-    pass
+  pass
 
 
-admin.site.register(Date, ClothesAdmin)
+admin.site.register(Date, DateAdmin)
 admin.site.register(Outfit, OutfitAdmin)
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(Color, ColorAdmin)
 admin.site.register(ArticleType, ArticleTypeAdmin)
 admin.site.register(Store, StoreAdmin)
 admin.site.register(AccessorizedOutfit, AccessorizedOutfitAdmin)
+

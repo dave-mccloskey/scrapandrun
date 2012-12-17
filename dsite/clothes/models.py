@@ -6,6 +6,9 @@ class Store(models.Model):
     name = models.CharField(max_length=50)
     location = models.CharField(max_length=100)
     
+    class Meta:
+        ordering = ['name', 'location']
+    
     def __unicode__(self):
         return self.name + ' (' + self.location + ')'
 
@@ -28,6 +31,9 @@ class Color(models.Model):
     
     name = models.CharField(max_length=200)
     basic_color = models.CharField(max_length=2, choices=BASIC_COLORS)
+    
+    class Meta:
+        ordering = ['basic_color', 'name']
 
     def __unicode__(self):
         return self.name + " (" + self.get_basic_color_display() + ")"
@@ -35,6 +41,9 @@ class Color(models.Model):
 
 class ArticleType(models.Model):
     name = models.CharField(max_length=50)
+    
+    class Meta:
+        ordering = ['name']
     
     def __unicode__(self):
         return self.name
@@ -50,6 +59,9 @@ class Article(models.Model):
     purchase_location = models.ForeignKey(Store, verbose_name='purchase location',
         related_name='articles', on_delete=models.PROTECT)
     
+    class Meta:
+        ordering = ['name']
+    
     def __unicode__(self):
         return self.name
 
@@ -64,14 +76,17 @@ class Outfit(models.Model):
 class AccessorizedOutfit(models.Model):
     base_outfit = models.ForeignKey(Outfit, verbose_name='base outfit', related_name='accessorized_outfits')
     articles = models.ManyToManyField(Article, related_name='accessorized_outfits')
-    
+
     def __unicode__(self):
-        return str(self.id) + ': Outfit[' + str(self.base_outfit) + '] ' + ', '.join((f.__unicode__() for f in self.articles.all()))
+        return str(self.id) + ': ' + str(self.base_outfit) + ' ' + ', '.join((f.__unicode__() for f in self.articles.all()))
 
 
 class Date(models.Model):
     date = models.DateField('date', unique=True)
     outfits_worn = models.ManyToManyField(AccessorizedOutfit, related_name='dates_worn')
+    
+    class Meta:
+        ordering = ['date']
     
     def get_date_id(self):
         return str(self.date)
