@@ -5,7 +5,6 @@
 {% block css %}<link rel="stylesheet" href="/static/js/closure-library/closure/goog/css/autocomplete.css">{% endblock css %}
 
 {% block content %}
-<input type="text" id="searchText">
 {% if dates %}
 <h3>Dates</h3>
 <ul>
@@ -28,6 +27,7 @@
 
 {% if articles %}
 <h3>Articles</h3>
+Search: <input type="text" id="searchText">
 <ul>
 {% for article in articles %}
   <li><a href="article/{{article.id}}/">{{ article }}</a></li>
