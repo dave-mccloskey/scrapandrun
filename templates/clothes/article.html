@@ -4,6 +4,7 @@
 
 {% block content %}
 <h1>{{ article.name }}</h1>
+<p>Size: {{ article.size }}</p>
 <p><a href="/clothes/article_type/{{article.article_type.id}}">{{ article.article_type }}</a></p>
 <p>Purchased on {{ article.purchase_date|date:'M d, Y' }}
 	from {{ article.purchase_location }}
