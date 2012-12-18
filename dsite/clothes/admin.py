@@ -3,7 +3,7 @@ from django.contrib import admin
 
 
 class DateAdmin(admin.ModelAdmin):
-  pass
+  filter_horizontal = ['outfits_worn']
 
 
 class OutfitAdmin(admin.ModelAdmin):
@@ -29,6 +29,7 @@ class ArticleTypeAdmin(admin.ModelAdmin):
 class AccessorizedOutfitAdmin(admin.ModelAdmin):
   search_fields = ['base_outfit__articles__name', 'articles__name']
   filter_horizontal = ['articles',]
+  raw_id_fields = ['base_outfit',]
 
 
 class StoreAdmin(admin.ModelAdmin):
