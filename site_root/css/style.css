@@ -45,6 +45,11 @@
 
 /* ------------- Calendar --------------------- */
 
+#calendar table {
+    display: block;
+    width: 100%;
+}
+
 #calendar td {
     border: 1px solid black;
 }

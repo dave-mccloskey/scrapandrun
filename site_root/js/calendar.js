@@ -30,9 +30,26 @@ function Calendar(cal) {
         
         this.table = goog.dom.createTable(6, 7);
         goog.dom.append(this.cal, this.table);
+        goog.dom.insertChildAt(this.table,
+            goog.dom.createDom('thead', null,
+                goog.dom.createDom('tr', null, this.cellsWithDaysOfWeek())),
+            0);
         
         this.update();
     };
+    
+    this.daysOfWeek = function() {
+        return ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+    }
+    
+    this.cellsWithDaysOfWeek = function() {
+        var days = this.daysOfWeek();
+        cells = [];
+        for (var i = 0; i < days.length; i++) {
+            cells[i] = goog.dom.createDom('th', null, days[i]);
+        }
+        return cells;
+    }
     
     this.update = function() {
         goog.dom.setTextContent(goog.dom.getElement('headerText'),
