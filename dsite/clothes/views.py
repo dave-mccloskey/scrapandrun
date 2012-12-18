@@ -1,9 +1,14 @@
-from django.shortcuts import get_object_or_404, render_to_response
-from django.http import HttpResponseRedirect, HttpResponse
-from django.core.urlresolvers import reverse
-from django.template import RequestContext
 from clothes.models import *
+from clothes.filters import calendar_table
+
+from django.core.urlresolvers import reverse
 from django.db.models import Q
+from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import get_object_or_404, render_to_response
+from django.template import RequestContext
+
+import datetime
+from collections import defaultdict
 
 
 def overview(request):
@@ -23,6 +28,27 @@ def search(request):
   if articles:
     result += '["' + '", "'.join((a.name for a in articles)) + '"]'
   return HttpResponse(result)
+
+
+def calendar(request, year=datetime.datetime.now().year, month=datetime.datetime.now().month):
+  result = ''
+  
+  dates = Date.objects
+  if year:
+    dates = dates.filter(date__year=int(year))
+    if month: 
+      dates = dates.filter(date__month=int(month))
+  print dates
+  
+  # Create a dict of dict of lists like {2012: {12: [1, 2, 3]}}
+  date_map = defaultdict(lambda: defaultdict(list))
+  for date in dates:
+    date_map[date.date.year][date.date.month].append(date.date)
+  
+  return render_to_response('clothes/calendar.html', {
+      'dates': date_map,
+  })
+
 
 #def basic_color(request, basic_color_id):
 #  

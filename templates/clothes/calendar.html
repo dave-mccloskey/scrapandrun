@@ -1,0 +1,20 @@
+{% extends "clothes/base_clothes.html" %}
+{% load filters %}
+
+{% block title %}Calendar{% endblock title %}
+
+{% block content %}
+<div id="calendar"></div>
+{% endblock content %}
+
+{% block css %}
+{% endblock css %}
+
+{% block js %}
+<script src="/static/js/calendar.js"></script>
+<script>
+var c = new Calendar(document.getElementById('calendar'));
+c.go();
+</script>
+{% endblock js %}
+

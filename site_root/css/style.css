@@ -42,3 +42,10 @@
   font-size: 30px;
   line-height: 36px;
 }
+
+/* ------------- Calendar --------------------- */
+
+#calendar td {
+    border: 1px solid black;
+}
+

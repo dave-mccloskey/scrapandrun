@@ -25,5 +25,7 @@ urlpatterns = patterns('clothes.views',
             model=Color,
             template_name='clothes/color.html')),
     url(r'^search/', 'search'),
-    #url(r'^basic_color/(?P<pk>\w+)/$', 'basic_color'),
+    url(r'^calendar/', 'calendar'),
+    url(r'^calendar/(\d{4})/(\d{1,2})/', 'calendar'),
 )
+
