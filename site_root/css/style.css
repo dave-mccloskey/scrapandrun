@@ -46,11 +46,46 @@
 /* ------------- Calendar --------------------- */
 
 #calendar table {
-    display: block;
+    margin: 0px auto;
     width: 100%;
 }
 
 #calendar td {
     border: 1px solid black;
+    height: 10em;
 }
 
+#calendar div.date {
+  height: 100%;
+}
+
+div.othermonth {
+  color: #ccc;
+  background: rgba(0, 0, 255, 0.03);
+}
+
+#calendar h2 {
+  display: inline;
+}
+
+#changers {
+  float: right;
+}
+
+#changers a {
+  background-color: #333;
+  color: #ccc;
+  cursor: default;
+  display: inline-block;
+  border-radius: 2px;
+  width: 5em;
+  margin: .3em;
+  border: 1px solid black;
+  text-align: center;
+}
+
+#changers a:hover {
+  border: 1px solid #bbb;
+  text-decoration: none;
+  background-position: left -78px;
+}
