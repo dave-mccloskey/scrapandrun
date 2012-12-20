@@ -3,7 +3,7 @@ from django.contrib import admin
 
 
 class DateAdmin(admin.ModelAdmin):
-  filter_horizontal = ['outfits_worn']
+  filter_vertical = ['outfits_worn']
 
 
 class OutfitAdmin(admin.ModelAdmin):
