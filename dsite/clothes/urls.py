@@ -12,6 +12,11 @@ urlpatterns = patterns('clothes.views',
         DetailView.as_view(
             model=Outfit,
             template_name='clothes/outfit.html')),
+    url(r'^aoutfit/(?P<pk>\d+)/$',
+        DetailView.as_view(
+            model=AccessorizedOutfit,
+            context_object_name='aoutfit',
+            template_name='clothes/aoutfit.html')),
     url(r'^article/(?P<pk>\d+)/$',
         DetailView.as_view(
             model=Article,
@@ -27,5 +32,7 @@ urlpatterns = patterns('clothes.views',
     url(r'^search/', 'search'),
     url(r'^calendar/', 'calendar'),
     url(r'^calendar/(\d{4})/(\d{1,2})/', 'calendar'),
+    # JSON URLs
+    url(r'json/calendar/month/(\d{4})/(\d{1,2})/$', 'calendar__month'),
 )
 

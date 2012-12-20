@@ -53,10 +53,10 @@
 #calendar td {
     border: 1px solid black;
     height: 10em;
+    vertical-align: top;
 }
 
 #calendar div.date {
-  height: 100%;
 }
 
 div.othermonth {

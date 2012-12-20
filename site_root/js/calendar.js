@@ -2,6 +2,8 @@ goog.require('goog.dom');
 goog.require('goog.date');
 goog.require('goog.i18n.DateTimeFormat');
 goog.require('goog.events');
+goog.require('goog.net.XhrIo');
+goog.require('goog.json');
 
 function Calendar(cal) {
     this.cal = cal;
@@ -74,9 +76,24 @@ function Calendar(cal) {
           var klass = (d.getMonth() == this.date.getMonth() ? "thismonth" : "othermonth");
           goog.dom.removeChildren(cell);
           goog.dom.append(cell, goog.dom.createDom('div', {'id': id, 'class': 'date ' + klass}, '' + d.getDate()));
-          
+
           d.setDate(d.getDate() + 1)
         }
+        
+        // Send request for data for dates
+        if (this.request) {
+          this.request.abort();
+        }
+        this.request = new goog.net.XhrIo();
+        goog.events.listen(this.request, 'complete', function(){
+          //request complete
+          if(this.request.isSuccess()){
+            var data = this.request.getResponseJson();
+            console.log(data);
+            this.updateDateContents(data);
+          }
+        }, false, this);
+        this.request.send('/clothes/json/calendar/month/' + this.date.getYear() + '/' + (this.date.getMonth() + 1));
     };
     
     this.getStartDay = function() {
@@ -99,6 +116,26 @@ function Calendar(cal) {
     this.nextMonth = function() {
       this.incrementMonthBy(1);
     }
+    
+    this.updateDateContents = function(data) {
+      var d = new goog.date.DateTime(this.date);
+      while (d.getMonth() == this.date.getMonth()) {
+        var sDate = this.idFormatter.format(d);
+        console.log(sDate);
+        if (data[sDate]) {
+          var div = goog.dom.getElement(sDate);
+          var cell = goog.dom.getParentElement(div);
+          var ids = data[sDate]['aoutfit_id'];
+          for (var i = 0; i < ids.length; i++) {
+            goog.dom.append(cell, goog.dom.createDom('div', {'class': 'datecell'},
+                goog.dom.createDom('a', { 'href': '/clothes/aoutfit/' + ids[i] },
+                    'A-Outfit: ' + ids[i])));
+          }
+        }
+        
+        d.setDate(d.getDate() + 1)
+      }
+    };
     
 };
 
