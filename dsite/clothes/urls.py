@@ -32,6 +32,7 @@ urlpatterns = patterns('clothes.views',
     url(r'^search/', 'search'),
     url(r'^calendar/', 'calendar'),
     url(r'^calendar/(\d{4})/(\d{1,2})/', 'calendar'),
+    url(r'^problems/$', 'problems'),
     # JSON URLs
     url(r'json/calendar/month/(\d{4})/(\d{1,2})/$', 'calendar__month'),
 )

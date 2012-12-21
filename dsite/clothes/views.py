@@ -2,7 +2,7 @@ from clothes.models import *
 from clothes.filters import calendar_table
 
 from django.core.urlresolvers import reverse
-from django.db.models import Q
+from django.db.models import Q, F
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
@@ -58,7 +58,13 @@ def calendar__month(request, year, month):
     json[str(date.date)] = {'aoutfit_id': [aoutfit.id for aoutfit in date.outfits_worn.all()] }
   return HttpResponse(simplejson.dumps(json), mimetype='application/json')
   
-  
+
+def problems(request):
+  articles = Article.objects.filter(
+      Q(accessorized_outfits__dates_worn__date__lt=F('purchase_date')) |
+      Q(outfits__accessorized_outfits__dates_worn__date__lt=F('purchase_date'))
+  ).distinct()
+  return HttpResponse('<br>'.join(('<a href="/clothes/article/' + str(article.id) + '">' + article.name + '</a>') for article in articles))
   
 #def basic_color(request, basic_color_id):
 #  

@@ -89,7 +89,6 @@ function Calendar(cal) {
           //request complete
           if(this.request.isSuccess()){
             var data = this.request.getResponseJson();
-            console.log(data);
             this.updateDateContents(data);
           }
         }, false, this);
@@ -121,7 +120,6 @@ function Calendar(cal) {
       var d = new goog.date.DateTime(this.date);
       while (d.getMonth() == this.date.getMonth()) {
         var sDate = this.idFormatter.format(d);
-        console.log(sDate);
         if (data[sDate]) {
           var div = goog.dom.getElement(sDate);
           var cell = goog.dom.getParentElement(div);
