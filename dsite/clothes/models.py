@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Sum
 import datetime
 
 
@@ -75,6 +76,9 @@ class Article(models.Model):
 class Outfit(models.Model):
     articles = models.ManyToManyField(Article, related_name='outfits')
     
+    def cost(self):
+        return self.articles.aggregate(Sum('cost'))['cost__sum']
+    
     def __unicode__(self):
         return str(self.id) + ": " + ', '.join((f.__unicode__() for f in self.articles.all()))
 
@@ -84,6 +88,10 @@ class AccessorizedOutfit(models.Model):
         related_name='accessorized_outfits')
     articles = models.ManyToManyField(Article, related_name='accessorized_outfits',
         verbose_name='accessories', blank=True)
+    
+    def cost(self):
+        return (self.base_outfit.articles.aggregate(Sum('cost'))['cost__sum'] +
+          self.articles.aggregate(Sum('cost'))['cost__sum'])
 
     def __unicode__(self):
         articles = []
