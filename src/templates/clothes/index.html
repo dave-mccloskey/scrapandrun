@@ -17,11 +17,11 @@
     <p>No dates are available.</p>
 {% endif %}
 
-{% if outfits %}
-<h3>Outfits</h3>
+{% if aoutfits %}
+<h3>Accessorized Outfits</h3>
 <ul>
-{% for outfit in outfits %}
-  <li><a href="outfit/{{outfit.id}}/">{{ outfit }}</a></li>
+{% for aoutfit in aoutfits %}
+  <li><a href="aoutfit/{{aoutfit.id}}/">{{ aoutfit }}</a></li>
 {% endfor %}
 </ul>
 {% endif %}

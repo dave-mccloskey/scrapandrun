@@ -13,9 +13,9 @@ from collections import defaultdict
 
 def overview(request):
   return render_to_response('clothes/index.html', {
-    'dates': Date.objects.all().order_by('date'),
-    'outfits': Outfit.objects.all(),
-    'articles': Article.objects.all().order_by('name')
+      'dates': Date.objects.all().order_by('-date')[:10],
+      'aoutfits': AccessorizedOutfit.objects.all().order_by('-id')[:10],
+      'articles': Article.objects.all().order_by('name')[:10]
   })
 
 
