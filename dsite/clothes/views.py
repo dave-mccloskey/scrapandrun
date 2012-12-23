@@ -1,5 +1,4 @@
 from clothes.models import *
-from clothes.filters import calendar_table
 
 from django.core.urlresolvers import reverse
 from django.db.models import Q, F
@@ -24,7 +23,7 @@ def search(request):
   result = ''
   token = request.GET['token']
   max_matches = request.GET['max_matches']
-  
+
   articles = Article.objects.filter(name__icontains=token)[:max_matches]
   if articles:
     result += '["' + '", "'.join((a.name for a in articles)) + '"]'
@@ -33,19 +32,19 @@ def search(request):
 
 def calendar(request, year=datetime.datetime.now().year, month=datetime.datetime.now().month):
   result = ''
-  
+
   dates = Date.objects
   if year:
     dates = dates.filter(date__year=int(year))
-    if month: 
+    if month:
       dates = dates.filter(date__month=int(month))
   print dates
-  
+
   # Create a dict of dict of lists like {2012: {12: [1, 2, 3]}}
   date_map = defaultdict(lambda: defaultdict(list))
   for date in dates:
     date_map[date.date.year][date.date.month].append(date.date)
-  
+
   return render_to_response('clothes/calendar.html', {
       'dates': date_map,
   })
@@ -57,7 +56,7 @@ def calendar__month(request, year, month):
   for date in dates:
     json[str(date.date)] = {'aoutfit_id': [aoutfit.id for aoutfit in date.outfits_worn.all()] }
   return HttpResponse(simplejson.dumps(json), mimetype='application/json')
-  
+
 
 def problems(request):
   articles = Article.objects.filter(
@@ -65,9 +64,9 @@ def problems(request):
       Q(outfits__accessorized_outfits__dates_worn__date__lt=F('purchase_date'))
   ).distinct()
   return HttpResponse('<br>'.join(('<a href="/clothes/article/' + str(article.id) + '">' + article.name + '</a>') for article in articles))
-  
+
 #def basic_color(request, basic_color_id):
-#  
+#
 #
 #
 #def vote(request, poll_id):

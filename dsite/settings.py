@@ -1,4 +1,5 @@
 # Django settings for dsite project.
+import os
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -9,16 +10,28 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'clothes',               # Or path to database file if using sqlite3.
-        'USER': 'clothes_dev',           # Not used with sqlite3.
-        'PASSWORD': 'clothes_dev',       # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+if (os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine') or
+    os.getenv('SETTINGS_MODE') == 'prod'):
+    # Running on production App Engine, so use a Google Cloud SQL database.
+    DATABASES = {
+        'default': {
+            'ENGINE': 'google.appengine.ext.django.backends.rdbms',
+            'INSTANCE': 'clothesdb:scrapandrun',
+            'NAME': 'clothes',
+        }
     }
-}
+else:
+    # Running in development, so use a local MySQL database.
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+            'NAME': 'clothes',               # Or path to database file if using sqlite3.
+            'USER': 'clothes_dev',           # Not used with sqlite3.
+            'PASSWORD': 'clothes_dev',       # Not used with sqlite3.
+            'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+            'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        }
+    }
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -56,7 +69,7 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = ''
+STATIC_ROOT = '../static'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -124,7 +137,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     # South DB Migration Tool (easy_install South -- http://south.aeracode.org/)
-    'south',
+    #'south',
     # Autocomplete Light (https://github.com/yourlabs/django-autocomplete-light)
     'autocomplete_light',
 )
