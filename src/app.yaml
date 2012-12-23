@@ -11,9 +11,6 @@ libraries:
 builtins:
 - django_wsgi: on
 
-includes:
-  - dsite/
-
 handlers:
 - url: /static
   static_dir: static
