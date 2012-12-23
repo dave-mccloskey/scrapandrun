@@ -6,6 +6,14 @@
 
 {% block content %}
 <a href="/clothes/calendar/">Calendar</a>
+<h3>Counts</h3>
+<dl>
+{% for t, count in counts.items %}
+  <dt>{{ t }}</dt>
+  <dd>{{ count }}</dd>
+{% endfor %}
+</dl>
+
 {% if dates %}
 <h3>Dates</h3>
 <ul>

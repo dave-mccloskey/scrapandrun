@@ -15,7 +15,8 @@ def overview(request):
   return render_to_response('clothes/index.html', {
       'dates': Date.objects.all().order_by('-date')[:10],
       'aoutfits': AccessorizedOutfit.objects.all().order_by('-id')[:10],
-      'articles': Article.objects.all().order_by('name')[:10]
+      'articles': Article.objects.all().order_by('name')[:10],
+      'counts': counts,
   })
 
 
@@ -64,6 +65,16 @@ def problems(request):
       Q(outfits__accessorized_outfits__dates_worn__date__lt=F('purchase_date'))
   ).distinct()
   return HttpResponse('<br>'.join(('<a href="/clothes/article/' + str(article.id) + '">' + article.name + '</a>') for article in articles))
+
+
+def counts():
+  return {
+    'dates': Date.objects.count(),
+    'articles': Article.objects.count(),
+    'outfits': Outfit.objects.count(),
+    'accessorized outfits': AccessorizedOutfit.objects.count(),
+  }
+
 
 #def basic_color(request, basic_color_id):
 #
