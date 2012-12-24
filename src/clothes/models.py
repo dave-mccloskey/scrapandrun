@@ -1,7 +1,8 @@
 from django.db import models
-from django.db.models import Sum
-import datetime
+from django.db.models import Sum, Q, F
 
+import datetime
+from itertools import chain, ifilterfalse
 
 class Store(models.Model):
     name = models.CharField(max_length=50)
@@ -69,6 +70,9 @@ class Article(models.Model):
             Article.objects.filter(accessorized_outfits__articles__id=self.id))
         return articles.distinct().exclude(id=self.id).order_by('name')
     
+    def bought_on_or_before(self, date):
+        return self.purchase_date <= date
+    
     def __unicode__(self):
         return self.name
 
@@ -106,6 +110,15 @@ class Date(models.Model):
     
     class Meta:
         ordering = ['date']
+    
+    def all_articles(self):
+        return (Article.objects.filter(
+          Q(outfits__accessorized_outfits__dates_worn=self) |
+          Q(accessorized_outfits__dates_worn=self)))
+    
+    def articles_bought_before_worn(self):
+        l = (lambda article: article.bought_on_or_before(self.date))
+        return not all(map(l, self.all_articles()))
     
     def get_date_id(self):
         return str(self.date)

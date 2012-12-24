@@ -1,6 +1,18 @@
 from clothes.models import *
-from django.contrib import admin
+from django.contrib import admin, forms
 
+
+##### Forms for Validation
+
+class MyDateAdminForm(forms.ModelForm)
+  class Meta:
+    model = Date
+  
+  def clean(self):
+    print dir(self)
+    accessories = self.cleaned_data['all_articles']
+
+##### Admin Definitions
 
 class DateAdmin(admin.ModelAdmin):
   raw_id_fields = ['outfits_worn']

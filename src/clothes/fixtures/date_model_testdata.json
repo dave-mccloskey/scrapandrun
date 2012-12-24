@@ -1,0 +1,399 @@
+[
+  {
+    "pk": 1,
+    "model": "clothes.date",
+    "fields": {
+      "date": "2012-12-01",
+      "outfits_worn": [
+        1,
+        2
+      ]
+    }
+  },
+  {
+    "pk": 2,
+    "model": "clothes.date",
+    "fields": {
+      "date": "2011-12-01",
+      "outfits_worn": [
+        1,
+        2
+      ]
+    }
+  },
+  {
+    "pk": 1,
+    "model": "clothes.accessorizedoutfit",
+    "fields": {
+      "base_outfit": 1,
+      "articles": [
+        2,
+        127,
+        5
+      ]
+    }
+  },
+  {
+    "pk": 2,
+    "model": "clothes.accessorizedoutfit",
+    "fields": {
+      "base_outfit": 2,
+      "articles": [
+        9,
+        12
+      ]
+    }
+  },
+  {
+    "pk": 1,
+    "model": "clothes.outfit",
+    "fields": {
+      "articles": [
+        3,
+        1,
+        4
+      ]
+    }
+  },
+  {
+    "pk": 2,
+    "model": "clothes.article",
+    "fields": {
+      "name": "Brown Flat Leather Boots (b.o.c.)",
+      "color": [
+        2
+      ],
+      "article_type": 2,
+      "cost": 100.00,
+      "purchase_date": "2012-11-27",
+      "purchase_location": 2,
+      "size": "10"
+    }
+  },
+  {
+    "pk": 127,
+    "model": "clothes.article",
+    "fields": {
+      "name": "Brown Woven Belt",
+      "color": [
+        2,
+        47
+      ],
+      "article_type": 14,
+      "cost": 14.99,
+      "purchase_date": "2010-08-08",
+      "purchase_location": 3,
+      "size": "S/M"
+    }
+  },
+  {
+    "pk": 5,
+    "model": "clothes.article",
+    "fields": {
+      "name": "Lia Sophia Breathe",
+      "color": [
+        4
+      ],
+      "article_type": 4,
+      "cost": 28.00,
+      "purchase_date": "2011-07-29",
+      "purchase_location": 5,
+      "size": "30\"-33\""
+    }
+  },
+  {
+    "pk": 2,
+    "model": "clothes.outfit",
+    "fields": {
+      "articles": [
+        11,
+        10
+      ]
+    }
+  },
+  {
+    "pk": 9,
+    "model": "clothes.article",
+    "fields": {
+      "name": "Black Shooties - Bare Traps",
+      "color": [
+        8
+      ],
+      "article_type": 5,
+      "cost": 69.99,
+      "purchase_date": "2012-02-06",
+      "purchase_location": 8,
+      "size": "10"
+    }
+  },
+  {
+    "pk": 12,
+    "model": "clothes.article",
+    "fields": {
+      "name": "Myth Lia Sophia Necklace Y Black Beads ",
+      "color": [
+        8,
+        4,
+        6
+      ],
+      "article_type": 4,
+      "cost": 22.00,
+      "purchase_date": "2010-11-19",
+      "purchase_location": 5,
+      "size": "17\""
+    }
+  },
+  {
+    "pk": 3,
+    "model": "clothes.article",
+    "fields": {
+      "name": "Brown Cardigan",
+      "color": [
+        2
+      ],
+      "article_type": 3,
+      "cost": 18.00,
+      "purchase_date": "2010-10-01",
+      "purchase_location": 3,
+      "size": "XS"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "clothes.article",
+    "fields": {
+      "name": "F21 Skinny Jeans",
+      "color": [
+        1
+      ],
+      "article_type": 1,
+      "cost": 10.50,
+      "purchase_date": "2012-03-24",
+      "purchase_location": 1,
+      "size": "27"
+    }
+  },
+  {
+    "pk": 4,
+    "model": "clothes.article",
+    "fields": {
+      "name": "Purple Sleeveless Shell Cowl Neck Sweater",
+      "color": [
+        3
+      ],
+      "article_type": 3,
+      "cost": 11.70,
+      "purchase_date": "2011-10-14",
+      "purchase_location": 4,
+      "size": "XS"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "clothes.articletype",
+    "fields": {
+      "name": "Boots"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "clothes.store",
+    "fields": {
+      "name": "DSW",
+      "location": "San Jose"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "clothes.color",
+    "fields": {
+      "name": "Brown",
+      "basic_color": "NU"
+    }
+  },
+  {
+    "pk": 14,
+    "model": "clothes.articletype",
+    "fields": {
+      "name": "Belt"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "clothes.store",
+    "fields": {
+      "name": "Target",
+      "location": "Cranberry"
+    }
+  },
+  {
+    "pk": 47,
+    "model": "clothes.color",
+    "fields": {
+      "name": "Gold",
+      "basic_color": "NU"
+    }
+  },
+  {
+    "pk": 4,
+    "model": "clothes.articletype",
+    "fields": {
+      "name": "Necklace"
+    }
+  },
+  {
+    "pk": 5,
+    "model": "clothes.store",
+    "fields": {
+      "name": "Lia Sophia",
+      "location": "through Bri"
+    }
+  },
+  {
+    "pk": 4,
+    "model": "clothes.color",
+    "fields": {
+      "name": "Silver",
+      "basic_color": "NU"
+    }
+  },
+  {
+    "pk": 11,
+    "model": "clothes.article",
+    "fields": {
+      "name": "Hot Pink V-neck Sweater Express",
+      "color": [
+        10
+      ],
+      "article_type": 3,
+      "cost": 34.50,
+      "purchase_date": "2011-09-24",
+      "purchase_location": 10,
+      "size": "S"
+    }
+  },
+  {
+    "pk": 10,
+    "model": "clothes.article",
+    "fields": {
+      "name": "VS Low Rise Jeans",
+      "color": [
+        9
+      ],
+      "article_type": 1,
+      "cost": 49.50,
+      "purchase_date": "2009-01-03",
+      "purchase_location": 9,
+      "size": "4"
+    }
+  },
+  {
+    "pk": 5,
+    "model": "clothes.articletype",
+    "fields": {
+      "name": "Shoes"
+    }
+  },
+  {
+    "pk": 8,
+    "model": "clothes.store",
+    "fields": {
+      "name": "Famous Footwear",
+      "location": "Cranberry"
+    }
+  },
+  {
+    "pk": 8,
+    "model": "clothes.color",
+    "fields": {
+      "name": "Black",
+      "basic_color": "BK"
+    }
+  },
+  {
+    "pk": 6,
+    "model": "clothes.color",
+    "fields": {
+      "name": "White",
+      "basic_color": "WH"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "clothes.articletype",
+    "fields": {
+      "name": "Top"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "clothes.articletype",
+    "fields": {
+      "name": "Pants"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "clothes.store",
+    "fields": {
+      "name": "Forever 21",
+      "location": "Ross Park Mall"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "clothes.color",
+    "fields": {
+      "name": "Dark Blue",
+      "basic_color": "BL"
+    }
+  },
+  {
+    "pk": 4,
+    "model": "clothes.store",
+    "fields": {
+      "name": "Limited",
+      "location": "Ross Park Mall"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "clothes.color",
+    "fields": {
+      "name": "Dark Purple",
+      "basic_color": "VI"
+    }
+  },
+  {
+    "pk": 10,
+    "model": "clothes.store",
+    "fields": {
+      "name": "Express",
+      "location": "Ross Park Mall"
+    }
+  },
+  {
+    "pk": 10,
+    "model": "clothes.color",
+    "fields": {
+      "name": "Hot Pink",
+      "basic_color": "PK"
+    }
+  },
+  {
+    "pk": 9,
+    "model": "clothes.store",
+    "fields": {
+      "name": "Victoria's Secret",
+      "location": "Online"
+    }
+  },
+  {
+    "pk": 9,
+    "model": "clothes.color",
+    "fields": {
+      "name": "Indigo Crosshatch Blast",
+      "basic_color": "BL"
+    }
+  }
+]
