@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import Sum, Q, F
+from django.core.exceptions import ValidationError
 
 import datetime
 from itertools import chain, ifilterfalse
@@ -96,12 +97,15 @@ class AccessorizedOutfit(models.Model):
     def cost(self):
         return (self.base_outfit.articles.aggregate(Sum('cost'))['cost__sum'] +
           self.articles.aggregate(Sum('cost'))['cost__sum'])
-
-    def __unicode__(self):
+        
+    def all_articles(self):
         articles = []
         articles.extend(self.base_outfit.articles.all())
         articles.extend(self.articles.all())
-        return str(self.id) + ': ' + ', '.join((f.__unicode__() for f in articles))
+        return articles
+
+    def __unicode__(self):
+        return str(self.id) + ': ' + ', '.join((f.__unicode__() for f in self.all_articles()))
 
 
 class Date(models.Model):
