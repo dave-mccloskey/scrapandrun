@@ -64,7 +64,8 @@ def problems(request):
       Q(accessorized_outfits__dates_worn__date__lt=F('purchase_date')) |
       Q(outfits__accessorized_outfits__dates_worn__date__lt=F('purchase_date'))
   ).distinct()
-  return HttpResponse('<br>'.join(('<a href="/clothes/article/' + str(article.id) + '">' + article.name + '</a>') for article in articles))
+  return HttpResponse('<br>'.join(('<a href="/clothes/article/' + str(article.id) + '">' +
+      article.name + '</a>') for article in articles))
 
 
 def counts():
