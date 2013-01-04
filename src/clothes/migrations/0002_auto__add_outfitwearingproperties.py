@@ -47,7 +47,7 @@ class Migration(SchemaMigration):
             'Meta': {'ordering': "['date']", 'object_name': 'Date'},
             'date': ('django.db.models.fields.DateField', [], {'unique': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'outfits_worn': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'dates_worn'", 'symmetrical': 'False', 'to': "orm['clothes.AccessorizedOutfit']"})
+            'outfits_worn': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'dates_worn'", 'symmetrical': 'False', 'through': "orm['clothes.OutfitWearingProperties']", 'to': "orm['clothes.AccessorizedOutfit']"})
         },
         'clothes.outfit': {
             'Meta': {'object_name': 'Outfit'},
@@ -56,8 +56,8 @@ class Migration(SchemaMigration):
         },
         'clothes.outfitwearingproperties': {
             'Meta': {'object_name': 'OutfitWearingProperties'},
-            'accessorizedoutfit_id': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['clothes.AccessorizedOutfit']"}),
-            'date_id': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['clothes.Date']"}),
+            'accessorizedoutfit': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['clothes.AccessorizedOutfit']"}),
+            'date': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['clothes.Date']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
         },
         'clothes.store': {
