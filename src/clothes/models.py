@@ -137,5 +137,6 @@ class Date(models.Model):
 class OutfitWearingProperties(models.Model):
   date = models.ForeignKey(Date)
   accessorizedoutfit = models.ForeignKey(AccessorizedOutfit)
-  # photo = PicasaField(upload_to='/clothes_site_image', max_length=300)
+  photo = PicasaField(upload_to='/clothes_site_image', max_length=300,
+      null=True)
 
