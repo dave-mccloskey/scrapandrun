@@ -7,30 +7,35 @@ from picasa import PicasaAdminImageWidget
 
 ##### Forms for Validation
 
-class MyDateAdminForm(forms.ModelForm):
+class MyOutfitWearingPropertiesInlineAdminForm(forms.ModelForm):
   class Meta:
-    model = Date
+    model = OutfitWearingProperties
 
   def clean(self):
-    cleaned_data = super(MyDateAdminForm, self).clean()
-    date = cleaned_data.get("date")
-    outfits_worn = cleaned_data.get("outfits_worn")
+    cleaned_data = super(MyOutfitWearingPropertiesInlineAdminForm, self).clean()
+    date = cleaned_data.get("date").date
+    outfit = cleaned_data.get("accessorizedoutfit")
 
     errors = []
-    for outfit in outfits_worn:
-      for article in outfit.all_articles():
-        if article.purchase_date > date:
-          errors.append(u'%s was bought on %s, after %s' %
-            (article.name, str(article.purchase_date), str(date)))
+    for article in outfit.all_articles():
+      if article.purchase_date > date:
+        errors.append(u'%s was bought on %s, after %s' %
+          (article.name, str(article.purchase_date), str(date)))
     if len(errors) > 0:
       raise ValidationError(errors)
     return cleaned_data
 
 ##### Admin Definitions
 
+class OutfitWearingPropertiesInline(admin.TabularInline):
+  form = MyOutfitWearingPropertiesInlineAdminForm
+  formfield_overrides = {PicasaField: {'widget': PicasaAdminImageWidget}, }
+  model = OutfitWearingProperties
+  raw_id_fields = ['accessorizedoutfit']
+  extra = 0
+
 class DateAdmin(admin.ModelAdmin):
-  form = MyDateAdminForm
-  raw_id_fields = ['outfits_worn']
+  inlines = (OutfitWearingPropertiesInline,)
 
 
 class OutfitAdmin(admin.ModelAdmin):
@@ -57,6 +62,7 @@ class AccessorizedOutfitAdmin(admin.ModelAdmin):
   search_fields = ['base_outfit__articles__name', 'articles__name']
   filter_horizontal = ['articles', ]
   raw_id_fields = ['base_outfit', ]
+  inlines = (OutfitWearingPropertiesInline,)
 
 
 class StoreAdmin(admin.ModelAdmin):
