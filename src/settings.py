@@ -138,7 +138,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     # South DB Migration Tool (easy_install South -- http://south.aeracode.org/)
-    # 'south',
+    'south',
     # Autocomplete Light (https://github.com/yourlabs/django-autocomplete-light)
     'autocomplete_light',
     # Django-Picasa (http://pypi.python.org/pypi/django-picasa)
