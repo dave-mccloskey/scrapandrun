@@ -168,6 +168,9 @@ LOGGING = {
     }
 }
 
+FILE_UPLOAD_HANDLERS = ('django.core.files.uploadhandler.MemoryFileUploadHandler',)
+FILE_UPLOAD_MAX_MEMORY_SIZE = 5 * 2 ** 20  # 5 MiB
+
 PICASA_STORAGE_OPTIONS = {
   'email':'colleen.michelle.mccloskey@gmail.com',
   'source':'clothes_site',

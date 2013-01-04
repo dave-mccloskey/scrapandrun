@@ -113,6 +113,7 @@ class AccessorizedOutfit(models.Model):
 class Date(models.Model):
     date = models.DateField('date', unique=True)
     outfits_worn = models.ManyToManyField(AccessorizedOutfit, related_name='dates_worn')
+        # through='OutfitWearingProperties')
 
     class Meta:
         ordering = ['date']
@@ -131,4 +132,10 @@ class Date(models.Model):
 
     def __unicode__(self):
         return str(self.date)
+
+
+# class OutfitWearingProperties(models.Model):
+#  date = models.ForeignKey(Date)
+#  aoutfit = models.ForeignKey(AccessorizedOutfit)
+#  photo = PicasaField(upload_to='/clothes_site_image', max_length=300)
 

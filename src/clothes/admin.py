@@ -3,6 +3,7 @@ from clothes.models import *
 from django import forms
 from django.contrib import admin
 
+from picasa import PicasaAdminImageWidget
 
 ##### Forms for Validation
 
