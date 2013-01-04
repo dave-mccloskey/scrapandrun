@@ -7,21 +7,24 @@
 
 <h2>Outfits worn:</h2>
 <ul>
-{% for aoutfit in date.outfits_worn.all %}
-  <li><a href="/clothes/aoutfit/{{aoutfit.id}}">Accessorized Outfit #{{ aoutfit.id }}</a>
+{% for props in date.outfitwearingproperties_set.all %}
+  <li><a href="/clothes/props.accessorizedoutfit/{{props.accessorizedoutfit.id}}">Accessorized Outfit #{{ props.accessorizedoutfit.id }}</a>
   <ul>
   <li>
-    <a href="/clothes/outfit/{{aoutfit.base_outfit.id}}">Base Outfit #{{ aoutfit.base_outfit.id }}</a>
+    <a href="{{props.photo.src_1000}}"><img src="{{props.photo.src_300}}" width="300"/></a><br/>
+  </li>
+  <li>
+    <a href="/clothes/outfit/{{props.accessorizedoutfit.base_outfit.id}}">Base Outfit #{{ props.accessorizedoutfit.base_outfit.id }}</a>
     <ul>
-    {% for article in aoutfit.base_outfit.articles.all %}
+    {% for article in props.accessorizedoutfit.base_outfit.articles.all %}
       <li><a href="/clothes/article/{{article.id}}">{{ article }}</a></li>
     {% endfor %}
     </ul>
   </li>
   <li>Dates Worn
     <ul>
-    {% if aoutfit.dates_worn %}
-      {% for date in aoutfit.dates_worn.all %}
+    {% if props.accessorizedoutfit.dates_worn %}
+      {% for date in props.accessorizedoutfit.dates_worn.all %}
         <li><a href="/clothes/date/{{date.id}}">{{ date.date|date:'Y-m-d' }}</a></li>
       {% endfor %}
     {% endif %}
@@ -30,7 +33,7 @@
   
     <li>Accessories
       <ul>
-        {% for article in aoutfit.articles.all %}
+        {% for article in props.accessorizedoutfit.articles.all %}
           <li><a href="/clothes/article/{{article.id}}">{{ article }}</a></li>
         {% endfor %}
       </ul>
