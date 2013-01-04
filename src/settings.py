@@ -141,6 +141,8 @@ INSTALLED_APPS = (
     # 'south',
     # Autocomplete Light (https://github.com/yourlabs/django-autocomplete-light)
     'autocomplete_light',
+    # Django-Picasa (http://pypi.python.org/pypi/django-picasa)
+    'picasa',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -165,3 +167,12 @@ LOGGING = {
         },
     }
 }
+
+PICASA_STORAGE_OPTIONS = {
+  'email':'colleen.michelle.mccloskey@gmail.com',
+  'source':'clothes_site',
+  'password':'pcjnnkwxvhumgskc',
+  'userid':'colleen.michelle.mccloskey@gmail.com',
+  'cache': True
+}
+

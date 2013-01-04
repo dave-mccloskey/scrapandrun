@@ -1,3 +1,5 @@
+from picasa import PicasaField
+
 from django.db import models
 from django.db.models import Sum, Q, F
 from django.core.exceptions import ValidationError
