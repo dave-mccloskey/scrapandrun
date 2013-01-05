@@ -21,6 +21,7 @@ if (os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine') or
             'NAME': 'clothes',
         }
     }
+    SOUTH_DATABASE_ADAPTERS = {'default':'south.db.mysql'}
     PICASA_ALBUM_NAME = '/snr_images-prod'
 else:
     # Running in development, so use a local MySQL database.
