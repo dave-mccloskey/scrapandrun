@@ -1,4 +1,5 @@
 from picasa import PicasaField
+from settings import PICASA_ALBUM_NAME
 
 from django.db import models
 from django.db.models import Sum, Q, F
@@ -123,6 +124,10 @@ class Date(models.Model):
           Q(outfits__accessorized_outfits__dates_worn=self) |
           Q(accessorized_outfits__dates_worn=self)))
 
+    def outfit_ids(self):
+      aoutfits = (AccessorizedOutfit.objects.filter(dates_worn=self))
+      return ', '.join([str(aoutfit.id) for aoutfit in aoutfits])
+
     def articles_bought_before_worn(self):
         l = (lambda article: article.bought_on_or_before(self.date))
         return not all(map(l, self.all_articles()))
@@ -137,6 +142,6 @@ class Date(models.Model):
 class OutfitWearingProperties(models.Model):
   date = models.ForeignKey(Date)
   accessorizedoutfit = models.ForeignKey(AccessorizedOutfit)
-  photo = PicasaField(upload_to='/clothes_site_image', max_length=300,
+  photo = PicasaField(upload_to=PICASA_ALBUM_NAME, max_length=300,
       null=True)
 

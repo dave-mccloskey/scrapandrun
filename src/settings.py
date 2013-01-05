@@ -21,6 +21,7 @@ if (os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine') or
             'NAME': 'clothes',
         }
     }
+    PICASA_ALBUM_NAME = '/snr_images-prod'
 else:
     # Running in development, so use a local MySQL database.
     DATABASES = {
@@ -33,6 +34,7 @@ else:
             'PORT': '',  # Set to empty string for default. Not used with sqlite3.
         }
     }
+    PICASA_ALBUM_NAME = '/snr_images-test'
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name

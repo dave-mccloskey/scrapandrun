@@ -36,7 +36,8 @@ class OutfitWearingPropertiesInline(admin.TabularInline):
 
 class DateAdmin(admin.ModelAdmin):
   inlines = (OutfitWearingPropertiesInline,)
-
+  search_fields = ['date', 'outfits_worn', ]
+  list_display = ['date', 'outfit_ids']
 
 class OutfitAdmin(admin.ModelAdmin):
   filter_horizontal = ['articles', ]
