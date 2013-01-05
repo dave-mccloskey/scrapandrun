@@ -72,10 +72,10 @@ class PicasaStorage(Storage):
 		else:
 			album = self.albumFromTitle(album_name)
 			if not album:
-				print 'inserting album', album_name
+				# print 'inserting album', album_name
 				album = self.insertAlbum(album_name)
 			album_name = album.gphoto_id.text
-		print 'inserting photo', album_name, image_name
+		# print 'inserting photo', album_name, image_name
 		content.seek(0)
 		what = 'image/'+imghdr.what(image_name, content.file.read(2048))
 		content.seek(0)
