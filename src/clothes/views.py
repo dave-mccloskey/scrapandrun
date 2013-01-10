@@ -10,7 +10,6 @@ from django.utils import simplejson
 import datetime
 from collections import defaultdict
 
-
 def overview(request):
   return render_to_response('clothes/index.html', {
       'dates': Date.objects.all().order_by('-date')[:10],
@@ -18,7 +17,6 @@ def overview(request):
       'articles': Article.objects.all().order_by('name')[:10],
       'counts': counts,
   })
-
 
 def search(request):
   result = ''
@@ -30,26 +28,8 @@ def search(request):
     result += '["' + '", "'.join((a.name for a in articles)) + '"]'
   return HttpResponse(result)
 
-
 def calendar(request, year=datetime.datetime.now().year, month=datetime.datetime.now().month):
-  result = ''
-
-  dates = Date.objects
-  if year:
-    dates = dates.filter(date__year=int(year))
-    if month:
-      dates = dates.filter(date__month=int(month))
-  print dates
-
-  # Create a dict of dict of lists like {2012: {12: [1, 2, 3]}}
-  date_map = defaultdict(lambda: defaultdict(list))
-  for date in dates:
-    date_map[date.date.year][date.date.month].append(date.date)
-
-  return render_to_response('clothes/calendar.html', {
-      'dates': date_map,
-  })
-
+  return render_to_response('clothes/calendar.html', {'year': year, 'month': month})
 
 def calendar__month(request, year, month):
   json = {}
@@ -58,7 +38,6 @@ def calendar__month(request, year, month):
     json[str(date.date)] = {'aoutfit_id': [aoutfit.id for aoutfit in date.outfits_worn.all()] }
   return HttpResponse(simplejson.dumps(json), mimetype='application/json')
 
-
 def problems(request):
   articles = Article.objects.filter(
       Q(accessorized_outfits__dates_worn__date__lt=F('purchase_date')) |
@@ -66,7 +45,6 @@ def problems(request):
   ).distinct()
   return HttpResponse('<br>'.join(('<a href="/clothes/article/' + str(article.id) + '">' +
       article.name + '</a>') for article in articles))
-
 
 def counts():
   return {
