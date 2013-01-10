@@ -35,7 +35,11 @@ def calendar__month(request, year, month):
   json = {}
   dates = Date.objects.filter(date__year=int(year)).filter(date__month=int(month))
   for date in dates:
-    json[str(date.date)] = {'aoutfit_id': [aoutfit.id for aoutfit in date.outfits_worn.all()] }
+    values = {'aoutfit_id': [aoutfit.id for aoutfit in date.outfits_worn.all()]}
+    photo = date.first_outfit_photo()
+    if photo:
+      values['img_url'] = photo.src_320
+    json[str(date.date)] = values
   return HttpResponse(simplejson.dumps(json), mimetype='application/json')
 
 def problems(request):

@@ -17,17 +17,17 @@ function Calendar(cal) {
             today: 'Today',
         }
     };
-    
+
     this.go = function() {
         this.date = new goog.date.DateTime();
         this.date.setDate(1); // Set to first of the month
         this.monthFormatter = new goog.i18n.DateTimeFormat('MMMM yyyy');
         this.idFormatter = new goog.i18n.DateTimeFormat('yyyy-MM-dd');
-    
+
         goog.dom.append(this.cal, 
             goog.dom.createDom('h2', null,
                 goog.dom.createDom('span', {'id': 'headerText'}, 'Nomonth 2000')));
-        
+
         /* Setup Next/Prev Month Buttons */
         this.prevButton = goog.dom.createDom('a', null, this.consts.buttonText.prev);
         this.nextButton = goog.dom.createDom('a', null, this.consts.buttonText.next);
@@ -58,28 +58,29 @@ function Calendar(cal) {
         var days = this.daysOfWeek();
         cells = [];
         for (var i = 0; i < days.length; i++) {
-            cells[i] = goog.dom.createDom('th', null, days[i]);
+          cells[i] = goog.dom.createDom('th', null, days[i]);
         }
         return cells;
     }
-    
+
     this.update = function() {
         goog.dom.setTextContent(goog.dom.getElement('headerText'),
             this.monthFormatter.format(this.date));
-        
+
         var cells = goog.dom.findNodes(this.table, function(node) { return node.nodeName == 'TD'; });
-        
+
         var d = this.getStartDay();
         for (var i = 0; i < cells.length; i++) {
           var cell = cells[i];
           var id = this.idFormatter.format(d);
           var klass = (d.getMonth() == this.date.getMonth() ? "thismonth" : "othermonth");
           goog.dom.removeChildren(cell);
-          goog.dom.append(cell, goog.dom.createDom('div', {'id': id, 'class': 'date ' + klass}, '' + d.getDate()));
+          goog.dom.append(cell, goog.dom.createDom('div', {'id': id, 'class': 'date ' + klass}, '' +
+              d.getDate()));
 
           d.setDate(d.getDate() + 1)
         }
-        
+
         // Send request for data for dates
         if (this.request) {
           this.request.abort();
@@ -92,7 +93,8 @@ function Calendar(cal) {
             this.updateDateContents(data);
           }
         }, false, this);
-        this.request.send('/clothes/json/calendar/month/' + this.date.getYear() + '/' + (this.date.getMonth() + 1));
+        this.request.send('/clothes/json/calendar/month/' + this.date.getYear() + '/' +
+          (this.date.getMonth() + 1));
     };
     
     this.getStartDay = function() {
@@ -123,6 +125,14 @@ function Calendar(cal) {
         if (data[sDate]) {
           var div = goog.dom.getElement(sDate);
           var cell = goog.dom.getParentElement(div);
+
+          // Add image
+          var imgUrl = data[sDate]['img_url'];
+          if (imgUrl) {
+            goog.dom.append(cell, goog.dom.createDom('img', {'src': imgUrl}));
+          }
+
+          // Add aoutfits
           var ids = data[sDate]['aoutfit_id'];
           for (var i = 0; i < ids.length; i++) {
             goog.dom.append(cell, goog.dom.createDom('div', {'class': 'datecell'},

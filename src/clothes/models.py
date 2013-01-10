@@ -128,6 +128,13 @@ class Date(models.Model):
       aoutfits = (AccessorizedOutfit.objects.filter(dates_worn=self))
       return ', '.join([str(aoutfit.id) for aoutfit in aoutfits])
 
+    def first_outfit_photo(self):
+      props = (OutfitWearingProperties.objects.filter(date=self))
+      for prop in props:
+        if prop.photo:
+          return prop.photo
+      return None
+
     def articles_bought_before_worn(self):
         l = (lambda article: article.bought_on_or_before(self.date))
         return not all(map(l, self.all_articles()))
@@ -143,5 +150,5 @@ class OutfitWearingProperties(models.Model):
   date = models.ForeignKey(Date)
   accessorizedoutfit = models.ForeignKey(AccessorizedOutfit)
   photo = PicasaField(upload_to=PICASA_ALBUM_NAME, max_length=300,
-      null=True)
+      null=True, blank=True)
 
