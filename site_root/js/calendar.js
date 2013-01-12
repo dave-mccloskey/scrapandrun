@@ -7,7 +7,7 @@ goog.require('goog.json');
 
 function Calendar(cal) {
     this.cal = cal;
-    
+
     this.consts = {
         buttonText: {
             prev: '\u25c0',
@@ -39,21 +39,21 @@ function Calendar(cal) {
             false, this);
         goog.events.listen(this.nextButton, goog.events.EventType.CLICK, this.nextMonth,
             false, this);
-        
+
         this.table = goog.dom.createTable(6, 7);
         goog.dom.append(this.cal, this.table);
         goog.dom.insertChildAt(this.table,
             goog.dom.createDom('thead', null,
                 goog.dom.createDom('tr', null, this.cellsWithDaysOfWeek())),
             0);
-        
+
         this.update();
     };
-    
+
     this.daysOfWeek = function() {
         return ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
     }
-    
+
     this.cellsWithDaysOfWeek = function() {
         var days = this.daysOfWeek();
         cells = [];
@@ -96,7 +96,7 @@ function Calendar(cal) {
         this.request.send('/clothes/json/calendar/month/' + this.date.getYear() + '/' +
           (this.date.getMonth() + 1));
     };
-    
+
     this.getStartDay = function() {
         var dayOfWeek = this.date.getDay();
         var daysToDoInPrevMonth = dayOfWeek;
@@ -104,22 +104,23 @@ function Calendar(cal) {
         d.setDate(d.getDate() - daysToDoInPrevMonth);
         return d;
     }
-    
+
     this.incrementMonthBy = function(n) {
       this.date.setMonth(this.date.getMonth() + n);
       this.update();
     }
-    
+
     this.prevMonth = function() {
       this.incrementMonthBy(-1);
     }
-    
+
     this.nextMonth = function() {
       this.incrementMonthBy(1);
     }
-    
+
     this.updateDateContents = function(data) {
       var d = new goog.date.DateTime(this.date);
+      this.imgReqs = {}
       while (d.getMonth() == this.date.getMonth()) {
         var sDate = this.idFormatter.format(d);
         if (data[sDate]) {
@@ -127,9 +128,19 @@ function Calendar(cal) {
           var cell = goog.dom.getParentElement(div);
 
           // Add image
-          var imgUrl = data[sDate]['img_url'];
-          if (imgUrl) {
-            goog.dom.append(cell, goog.dom.createDom('img', {'src': imgUrl}));
+          var img = data[sDate]['img'];
+          if (img) {
+            var req = {};
+            this.imgReqs[img] = req;
+            req.request = new goog.net.XhrIo();
+            goog.events.listen(req.request, 'complete', function(){
+              //request complete
+              if(req.request.isSuccess()){
+                var data = req.request.getResponseJson();
+                this.updateImg(cell, data);
+              }
+            }, false, this);
+            req.request.send('/clothes/json/photo/320/' + img);
           }
 
           // Add aoutfits
@@ -140,10 +151,16 @@ function Calendar(cal) {
                     'A-Outfit: ' + ids[i])));
           }
         }
-        
+
         d.setDate(d.getDate() + 1)
       }
     };
-    
+
+    this.updateImg = function(cell, data) {
+      if (data.src) {
+        goog.dom.append(cell, goog.dom.createDom('img', {'src': data.src}));
+      }
+    }
+
 };
 

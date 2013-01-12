@@ -35,4 +35,5 @@ urlpatterns = patterns('clothes.views',
     url(r'^problems/$', 'problems'),
     # JSON URLs
     url(r'json/calendar/month/(\d{4})/(\d{1,2})/$', 'calendar__month'),
+    url(r'json/photo/(\d*)/(.*)', 'photo__src')
 )
