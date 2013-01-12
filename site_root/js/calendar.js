@@ -130,17 +130,7 @@ function Calendar(cal) {
           // Add image
           var img = data[sDate]['img'];
           if (img) {
-            var req = {};
-            this.imgReqs[img] = req;
-            req.request = new goog.net.XhrIo();
-            goog.events.listen(req.request, 'complete', function(){
-              //request complete
-              if(req.request.isSuccess()){
-                var data = req.request.getResponseJson();
-                this.updateImg(cell, data);
-              }
-            }, false, this);
-            req.request.send('/clothes/json/photo/320/' + img);
+            this.loadImgAsync(img, cell);
           }
 
           // Add aoutfits
@@ -155,6 +145,18 @@ function Calendar(cal) {
         d.setDate(d.getDate() + 1)
       }
     };
+
+    this.loadImgAsync = function(img, cell) {
+      var req = new goog.net.XhrIo();
+      goog.events.listen(req, 'complete', function(){
+        //request complete
+        if(req.isSuccess()){
+          var data = req.getResponseJson();
+          this.updateImg(cell, data);
+        }
+      }, false, this);
+      req.send('/clothes/json/photo/320/' + img);
+    }
 
     this.updateImg = function(cell, data) {
       if (data.src) {
