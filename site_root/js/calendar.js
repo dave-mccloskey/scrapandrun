@@ -94,7 +94,7 @@ function Calendar(cal) {
           }
         }, false, this);
         this.request.send('/clothes/json/calendar/month/' + this.date.getYear() + '/' +
-          (this.date.getMonth() + 1));
+          (this.date.getMonth() + 1) + '/');
     };
 
     this.getStartDay = function() {
