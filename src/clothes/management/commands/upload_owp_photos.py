@@ -13,13 +13,20 @@ class Command(BaseCommand):
     if not len(args):
       self.stdout.write(' Specify images to upload in format e.g. January1,2013big.jpg\n')
     for arg in args:
-      self.handleImg(os.path.dirname(arg), os.path.basename(arg))
+      try:
+        self.handleImg(os.path.dirname(arg), os.path.basename(arg))
+      except Exception as e:
+        self.stdout.write('** Unexpected error: %s\n' % e)
 
   def handleImg(self, img_path, img_name):
     self.stdout.write('Looking @ %s\n' % img_name)
-    dt = datetime.strptime(img_name, self.FORMAT)
+    try:
+      dt = datetime.strptime(img_name, self.FORMAT)
+    except ValueError as e:
+      self.stdout.write(' Unable to parse file name: %s\n' % str(e))
+      return
     self.stdout.write(' Img is for %s\n' % dt)
-    
+
     owp = OutfitWearingProperties.objects.filter(date__date=dt)
 
     if len(owp) == 0:
@@ -30,24 +37,24 @@ class Command(BaseCommand):
       return
 
     self.stdout.write(' Single OWP matched, continuing\n')
-    
+
     owp = owp[0]
 
     if owp.photo:
       self.stdout.write(' OWP already has a photo, skipping\n')
       return
-    
+
     try:
       self.stdout.write(' Opening file\n')
       f = open(os.path.join(img_path, img_name))
       df = File(f)
-    
+
       self.stdout.write(' Saving file to picasa\n')
       owp.photo.save(img_name, df, save=False)
-    
+
       self.stdout.write(' File saving complete\n')
       self.stdout.write(' Updating database\n')
-      
+
       owp.save()
     except IOError as e:
       self.stdout.write(' Problem opening file: %s\n' % e)
