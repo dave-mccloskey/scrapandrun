@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from django.utils import simplejson
+from django.views.decorators.cache import cache_control
 
 from bisect import bisect
 import datetime
@@ -52,6 +53,7 @@ def calendar__month(request, year, month):
     json[str(date.date)] = values
   return HttpResponse(simplejson.dumps(json), mimetype='application/json')
 
+@cache_control(no_cache=False, public=True, max_age=3600)
 def photo__src(request, size, photo_key):
   def src(photo_key, size=None):
     SIZES = (32, 48, 64, 72, 94, 104, 110, 128, 144, 150, 160, 200, 220, 288, 320, 400, 512, 576, 640, 720, 800, 912, 1024, 1152, 1280, 1440, 1600)
