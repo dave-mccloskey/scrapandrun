@@ -12,8 +12,10 @@
 {% block js %}
 <script src="/static/js/calendar.js"></script>
 <script>
-var c = new Calendar(document.getElementById('calendar'));
+var c = new Calendar(document.getElementById('calendar'),
+    { year: '{{year}}',
+      month: '{{month}}'
+    });
 c.go();
 </script>
 {% endblock js %}
-

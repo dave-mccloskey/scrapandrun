@@ -1,3 +1,4 @@
+goog.require('goog.bind')
 goog.require('goog.dom');
 goog.require('goog.date');
 goog.require('goog.i18n.DateTimeFormat');
@@ -5,8 +6,9 @@ goog.require('goog.events');
 goog.require('goog.net.XhrIo');
 goog.require('goog.json');
 
-function Calendar(cal) {
+function Calendar(cal, data) {
     this.cal = cal;
+    this.data = data;
 
     this.consts = {
         buttonText: {
@@ -21,6 +23,8 @@ function Calendar(cal) {
     this.go = function() {
         this.date = new goog.date.DateTime();
         this.date.setDate(1); // Set to first of the month
+        this.date.setYear(data.year);
+        this.date.setMonth(data.month - 1);
         this.monthFormatter = new goog.i18n.DateTimeFormat('MMMM yyyy');
         this.idFormatter = new goog.i18n.DateTimeFormat('yyyy-MM-dd');
 
@@ -48,6 +52,16 @@ function Calendar(cal) {
             0);
 
         this.update();
+
+        window.onpopstate = goog.bind(function(e) {
+          console.log('popped state ' + e.state);
+          if (e.state) {
+            this.date.setYear(e.state.year);
+            this.date.setMonth(e.state.month);
+            console.log('popped ' + this.monthFormatter.format(this.date));
+            this.update();
+          }
+        }, this);
     };
 
     this.daysOfWeek = function() {
@@ -106,6 +120,11 @@ function Calendar(cal) {
     }
 
     this.incrementMonthBy = function(n) {
+      console.log('pushing ' + this.monthFormatter.format(this.date));
+      history.pushState(
+          { year: this.date.getYear(), month: this.date.getMonth() },
+          null, '/clothes/calendar/' + this.date.getYear() + '/' + 
+          (this.date.getMonth() + 1) + '/');
       this.date.setMonth(this.date.getMonth() + n);
       this.update();
     }
@@ -163,6 +182,5 @@ function Calendar(cal) {
         goog.dom.append(cell, goog.dom.createDom('img', {'src': data.src}));
       }
     }
-
 };
 
