@@ -5,7 +5,7 @@ from django.db import models
 from django.db.models import Sum, Q, F
 from django.core.exceptions import ValidationError
 
-import datetime
+import datetime, os
 from itertools import chain, ifilterfalse
 
 class Store(models.Model):
@@ -147,8 +147,12 @@ class Date(models.Model):
 
 
 class OutfitWearingProperties(models.Model):
+  def pathFor(owp, filename):
+     album = PICASA_ALBUM_NAME + '-' + str(owp.date.date.year)
+     return os.path.join(album, filename)
+
   date = models.ForeignKey(Date)
   accessorizedoutfit = models.ForeignKey(AccessorizedOutfit)
-  photo = PicasaField(upload_to=PICASA_ALBUM_NAME, max_length=300,
+  photo = PicasaField(upload_to=pathFor, max_length=300,
       null=True, blank=True)
 
