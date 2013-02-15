@@ -54,6 +54,7 @@
     border: 1px solid black;
     height: 10em;
     vertical-align: top;
+    width: 14.286%
 }
 
 #calendar div.date {
