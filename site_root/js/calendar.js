@@ -28,21 +28,25 @@ function Calendar(cal, data) {
         this.monthFormatter = new goog.i18n.DateTimeFormat('MMMM yyyy');
         this.idFormatter = new goog.i18n.DateTimeFormat('yyyy-MM-dd');
 
-        goog.dom.append(this.cal, 
+        goog.dom.append(this.cal,
             goog.dom.createDom('h2', null,
-                goog.dom.createDom('span', {'id': 'headerText'}, 'Nomonth 2000')));
+                goog.dom.createDom('span', {'id': 'headerText'},
+                    'Nomonth 2000')));
 
         /* Setup Next/Prev Month Buttons */
-        this.prevButton = goog.dom.createDom('a', null, this.consts.buttonText.prev);
-        this.nextButton = goog.dom.createDom('a', null, this.consts.buttonText.next);
-        goog.dom.append(this.cal, goog.dom.createDom('div', {'id': 'changers'}, [
-            this.prevButton,
-            this.nextButton
-        ]));
-        goog.events.listen(this.prevButton, goog.events.EventType.CLICK, this.prevMonth,
-            false, this);
-        goog.events.listen(this.nextButton, goog.events.EventType.CLICK, this.nextMonth,
-            false, this);
+        this.prevButton = goog.dom.createDom('a', null,
+            this.consts.buttonText.prev);
+        this.nextButton = goog.dom.createDom('a', null,
+            this.consts.buttonText.next);
+        goog.dom.append(this.cal, goog.dom.createDom('div', {'id': 'changers'},
+            [
+              this.prevButton,
+              this.nextButton
+            ]));
+        goog.events.listen(this.prevButton, goog.events.EventType.CLICK,
+            this.prevMonth, false, this);
+        goog.events.listen(this.nextButton, goog.events.EventType.CLICK,
+            this.nextMonth, false, this);
 
         this.table = goog.dom.createTable(6, 7);
         goog.dom.append(this.cal, this.table);
@@ -81,16 +85,19 @@ function Calendar(cal, data) {
         goog.dom.setTextContent(goog.dom.getElement('headerText'),
             this.monthFormatter.format(this.date));
 
-        var cells = goog.dom.findNodes(this.table, function(node) { return node.nodeName == 'TD'; });
+        var cells = goog.dom.findNodes(this.table, function(node) {
+              return node.nodeName == 'TD';
+            });
 
         var d = this.getStartDay();
         for (var i = 0; i < cells.length; i++) {
           var cell = cells[i];
           var id = this.idFormatter.format(d);
-          var klass = (d.getMonth() == this.date.getMonth() ? "thismonth" : "othermonth");
+          var klass = (d.getMonth() == this.date.getMonth() ?
+              "thismonth" : "othermonth");
           goog.dom.removeChildren(cell);
-          goog.dom.append(cell, goog.dom.createDom('div', {'id': id, 'class': 'date ' + klass}, '' +
-              d.getDate()));
+          goog.dom.append(cell, goog.dom.createDom('div',
+              {'id': id, 'class': 'date ' + klass}, '' + d.getDate()));
 
           d.setDate(d.getDate() + 1)
         }
@@ -107,8 +114,8 @@ function Calendar(cal, data) {
             this.updateDateContents(data);
           }
         }, false, this);
-        this.request.send('/clothes/json/calendar/month/' + this.date.getYear() + '/' +
-          (this.date.getMonth() + 1) + '/');
+        this.request.send('/clothes/json/calendar/month/' + this.date.getYear()
+            + '/' + (this.date.getMonth() + 1) + '/');
     };
 
     this.getStartDay = function() {
@@ -123,7 +130,7 @@ function Calendar(cal, data) {
       console.log('pushing ' + this.monthFormatter.format(this.date));
       history.pushState(
           { year: this.date.getYear(), month: this.date.getMonth() },
-          null, '/clothes/calendar/' + this.date.getYear() + '/' + 
+          null, '/clothes/calendar/' + this.date.getYear() + '/' +
           (this.date.getMonth() + 1) + '/');
       this.date.setMonth(this.date.getMonth() + n);
       this.update();
@@ -155,8 +162,12 @@ function Calendar(cal, data) {
           // Add aoutfits
           var ids = data[sDate]['aoutfit_id'];
           for (var i = 0; i < ids.length; i++) {
-            goog.dom.append(cell, goog.dom.createDom('div', {'class': 'datecell'},
-                goog.dom.createDom('a', { 'href': '/clothes/aoutfit/' + ids[i] },
+            goog.dom.append(cell, goog.dom.createDom(
+                'div',
+                {'class': 'datecell'},
+                goog.dom.createDom(
+                    'a',
+                    { 'href': '/clothes/aoutfit/' + ids[i] },
                     'A-Outfit: ' + ids[i])));
           }
         }
@@ -167,9 +178,9 @@ function Calendar(cal, data) {
 
     this.loadImgAsync = function(img, cell) {
       var req = new goog.net.XhrIo();
-      goog.events.listen(req, 'complete', function(){
+      goog.events.listen(req, 'complete', function() {
         //request complete
-        if(req.isSuccess()){
+        if (req.isSuccess()) {
           var data = req.getResponseJson();
           this.updateImg(cell, data);
         }
@@ -183,4 +194,3 @@ function Calendar(cal, data) {
       }
     }
 };
-
