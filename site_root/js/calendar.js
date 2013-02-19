@@ -55,14 +55,15 @@ function Calendar(cal, data) {
                 goog.dom.createDom('tr', null, this.cellsWithDaysOfWeek())),
             0);
 
+        /* Set the initial state */
+        history.replaceState(this.makeState());
+
         this.update();
 
         window.onpopstate = goog.bind(function(e) {
-          console.log('popped state ' + e.state);
           if (e.state) {
             this.date.setYear(e.state.year);
             this.date.setMonth(e.state.month);
-            console.log('popped ' + this.monthFormatter.format(this.date));
             this.update();
           }
         }, this);
@@ -109,7 +110,7 @@ function Calendar(cal, data) {
         this.request = new goog.net.XhrIo();
         goog.events.listen(this.request, 'complete', function(){
           //request complete
-          if(this.request.isSuccess()){
+          if (this.request.isSuccess()) {
             var data = this.request.getResponseJson();
             this.updateDateContents(data);
           }
@@ -126,23 +127,30 @@ function Calendar(cal, data) {
         return d;
     }
 
+    this.makeState = function() {
+      return {
+        'year': this.date.getYear(),
+        'month': this.date.getMonth()
+      };
+    };
+
     this.incrementMonthBy = function(n) {
-      console.log('pushing ' + this.monthFormatter.format(this.date));
-      history.pushState(
-          { year: this.date.getYear(), month: this.date.getMonth() },
-          null, '/clothes/calendar/' + this.date.getYear() + '/' +
-          (this.date.getMonth() + 1) + '/');
       this.date.setMonth(this.date.getMonth() + n);
+      history.pushState(
+          this.makeState(),
+          null,
+          '/clothes/calendar/' + this.date.getYear()  + '/' +
+              (this.date.getMonth() + 1) + '/');
       this.update();
-    }
+    };
 
     this.prevMonth = function() {
       this.incrementMonthBy(-1);
-    }
+    };
 
     this.nextMonth = function() {
       this.incrementMonthBy(1);
-    }
+    };
 
     this.updateDateContents = function(data) {
       var d = new goog.date.DateTime(this.date);
@@ -186,11 +194,11 @@ function Calendar(cal, data) {
         }
       }, false, this);
       req.send('/clothes/json/photo/320/' + img);
-    }
+    };
 
     this.updateImg = function(cell, data) {
       if (data.src) {
         goog.dom.append(cell, goog.dom.createDom('img', {'src': data.src}));
       }
-    }
+    };
 };
