@@ -5,6 +5,7 @@ goog.require('goog.i18n.DateTimeFormat');
 goog.require('goog.events');
 goog.require('goog.net.XhrIo');
 goog.require('goog.json');
+goog.require('goog.ui.AdvancedTooltip')
 
 function Calendar(cal, data) {
     this.cal = cal;
@@ -97,7 +98,10 @@ function Calendar(cal, data) {
           var klass = (d.getMonth() == this.date.getMonth() ?
               "thismonth" : "othermonth");
           goog.dom.removeChildren(cell);
-          goog.dom.append(cell, goog.dom.createDom('div',
+          var wrapper = goog.dom.createDom('div',
+              {'class': 'calendarCellWrap'});
+          goog.dom.append(cell, wrapper);
+          goog.dom.append(wrapper, goog.dom.createDom('div',
               {'id': id, 'class': 'date ' + klass}, '' + d.getDate()));
 
           d.setDate(d.getDate() + 1)
@@ -198,7 +202,16 @@ function Calendar(cal, data) {
 
     this.updateImg = function(cell, data) {
       if (data.src) {
-        goog.dom.append(cell, goog.dom.createDom('img', {'src': data.src}));
+        var element = goog.dom.createDom('img', {'src': data.src});
+        goog.dom.append(cell, element);
+
+        var wrapper = goog.dom.getParentElement(element);
+        this.addToolTip(wrapper);
       }
     };
+
+    this.addToolTip = function(element) {
+      var tt = new goog.ui.AdvancedTooltip(element, 'text');
+      tt.setShowDelayMs(0);
+    }
 };

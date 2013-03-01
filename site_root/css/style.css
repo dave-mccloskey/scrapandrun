@@ -90,3 +90,9 @@ div.othermonth {
   text-decoration: none;
   background-position: left -78px;
 }
+
+.calendarCellWrap {
+  position: relative;
+  height: 100%;
+  background: rgba(255, 0, 0, .2);
+}
