@@ -50,6 +50,14 @@ def calendar__month(request, year, month):
       values['img'] = photo.name
     except StopIteration: # No photos available
       pass
+    def article_values(article):
+      return {
+        'id': article.id,
+        'name': article.name,
+        'type': article.article_type.name
+      }
+    values['articles'] = [article_values(a)
+        for a in prop.accessorizedoutfit.all_articles()]
     json[str(date.date)] = values
   return HttpResponse(simplejson.dumps(json), mimetype='application/json')
 

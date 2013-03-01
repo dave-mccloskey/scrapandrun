@@ -208,16 +208,38 @@ function Calendar(cal, data) {
     this.createTooltipElementHtml = function(data) {
       var contents = goog.dom.createDom('div', {'class': 'calendarPopup'});
       var element = goog.dom.createDom('div', {}, contents);
+
+      // Add articles
+      goog.dom.append(contents, goog.dom.createDom('h3',
+          {'class': 'calendarPopupHeading'},
+          'Articles'));
+      var articleContainer = goog.dom.createDom('ol',
+          {'class': 'calendarPopupList'});
+      var articles = data['articles'];
+      for (var i = 0; i < articles.length; i++) {
+        var a = articles[i];
+        goog.dom.append(articleContainer, goog.dom.createDom('li', {},
+            a.type + ": ",
+            goog.dom.createDom('a', {'href': '/clothes/article/' + a.id},
+                a.name)));
+      }
+      goog.dom.append(contents, articleContainer);
+
+      // List A-Outfits
+      goog.dom.append(contents, goog.dom.createDom('h3',
+          {'class': 'calendarPopupHeading'},
+          'Outfits Worn This Day'));
+      var outfitsContainer = goog.dom.createDom('ol',
+          {'class': 'calendarPopupList'});
       var ids = data['aoutfit_id'];
       for (var i = 0; i < ids.length; i++) {
-        goog.dom.append(contents, goog.dom.createDom(
-            'div',
-            {'class': 'datecell'},
-            goog.dom.createDom(
+        goog.dom.append(outfitsContainer, goog.dom.createDom(
+            'li', {}, goog.dom.createDom(
                 'a',
-                { 'href': '/clothes/aoutfit/' + ids[i] },
-                'A-Outfit: ' + ids[i])));
+                {'href': '/clothes/aoutfit/' + ids[i]},
+                '' + ids[i])));
       }
+      goog.dom.append(contents, outfitsContainer);
       return element.innerHTML;
     };
 };
