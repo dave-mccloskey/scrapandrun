@@ -171,17 +171,8 @@ function Calendar(cal, data) {
             this.loadImgAsync(img, cell);
           }
 
-          // Add aoutfits
-          var ids = data[sDate]['aoutfit_id'];
-          for (var i = 0; i < ids.length; i++) {
-            goog.dom.append(cell, goog.dom.createDom(
-                'div',
-                {'class': 'datecell'},
-                goog.dom.createDom(
-                    'a',
-                    { 'href': '/clothes/aoutfit/' + ids[i] },
-                    'A-Outfit: ' + ids[i])));
-          }
+          // Add Tooltip
+          this.addToolTip(cell, data[sDate]);
         }
 
         d.setDate(d.getDate() + 1)
@@ -204,14 +195,29 @@ function Calendar(cal, data) {
       if (data.src) {
         var element = goog.dom.createDom('img', {'src': data.src});
         goog.dom.append(cell, element);
-
-        var wrapper = goog.dom.getParentElement(element);
-        this.addToolTip(wrapper);
       }
     };
 
-    this.addToolTip = function(element) {
-      var tt = new goog.ui.AdvancedTooltip(element, 'text');
-      tt.setShowDelayMs(0);
-    }
+    this.addToolTip = function(element, data) {
+      var createTooltipElementHtml = this.createTooltipElementHtml(data);
+      var tt = new goog.ui.AdvancedTooltip(element);
+      tt.setHtml(createTooltipElementHtml);
+      tt.setShowDelayMs(3);
+    };
+
+    this.createTooltipElementHtml = function(data) {
+      var contents = goog.dom.createDom('div', {'class': 'calendarPopup'});
+      var element = goog.dom.createDom('div', {}, contents);
+      var ids = data['aoutfit_id'];
+      for (var i = 0; i < ids.length; i++) {
+        goog.dom.append(contents, goog.dom.createDom(
+            'div',
+            {'class': 'datecell'},
+            goog.dom.createDom(
+                'a',
+                { 'href': '/clothes/aoutfit/' + ids[i] },
+                'A-Outfit: ' + ids[i])));
+      }
+      return element.innerHTML;
+    };
 };

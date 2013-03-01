@@ -94,5 +94,19 @@ div.othermonth {
 .calendarCellWrap {
   position: relative;
   height: 100%;
-  background: rgba(255, 0, 0, .2);
+}
+
+.calendarPopup {
+  display: block;
+  min-width: 300px;
+  min-height: 100px;
+  background: rgba(20, 20, 100, 0.95);
+  border-radius: 15px;
+  padding: 15px;
+  border: 2px solid white;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+}
+
+.calendarPopup a {
+  color: white;
 }
