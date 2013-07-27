@@ -19,8 +19,9 @@ handlers:
   login: admin
   script: google.appengine.ext.django.main.app
 
-# - url: /(img|css|js|partials|lib)(.*)
-#   static_dir: app/\1/\2
+- url: /(img|css|js|partials|lib)(.*)
+  static_files: app/\1/\2
+  upload: app/\1/.*
 
 - url: /
   static_files: app/index.html
