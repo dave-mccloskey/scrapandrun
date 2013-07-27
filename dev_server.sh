@@ -2,5 +2,5 @@
 
 dev_appserver.py src \
   --port=9000 \
-  --address=localhost \
-  -d
+  --host=localhost \
+  --log_level=debug
