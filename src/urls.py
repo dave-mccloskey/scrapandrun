@@ -4,6 +4,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^_/clothes/', include('clothes.urls')),
+    url(r'^_/clothes_data/', include('clothes_data.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api-auth/', include('rest_framework.urls',
         namespace='rest_framework')),
