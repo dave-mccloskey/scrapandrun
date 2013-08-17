@@ -13,5 +13,5 @@ function MyCtrl2($scope) {
 MyCtrl2.$inject = ['$scope'];
 
 angular.module('clothes.controllers', [])
-  .controller('MyCtrl1', [MyCtrl1])
-  .controller('MyCtrl2', [MyCtrl2]);
+    .controller('MyCtrl1', [MyCtrl1])
+    .controller('MyCtrl2', [MyCtrl2]);
