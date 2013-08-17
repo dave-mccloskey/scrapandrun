@@ -32,6 +32,6 @@ router.register(r'articletypes', ArticleTypeViewSet)
 router.register(r'articles', ArticleViewSet)
 
 urlpatterns = patterns(
-    'clothes2.views',
+    'clothes_data.views',
     url(r'^', include(router.urls)),
 )
