@@ -6,13 +6,13 @@ TEMPLATE_DEBUG = DEBUG
 ROOT_PATH = os.path.dirname(__file__)
 
 ADMINS = (
-     ('David McCloskey', 'dave.mccloskey@gmail.com'),
+    ('David McCloskey', 'dave.mccloskey@gmail.com'),
 )
 
 MANAGERS = ADMINS
 
 if (os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine') or
-    os.getenv('SETTINGS_MODE') == 'prod'):
+        os.getenv('SETTINGS_MODE') == 'prod'):
     # Running on production App Engine, so use a Google Cloud SQL database.
     DATABASES = {
         'default': {
@@ -21,18 +21,18 @@ if (os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine') or
             'NAME': 'clothes',
         }
     }
-    SOUTH_DATABASE_ADAPTERS = {'default':'south.db.mysql'}
+    SOUTH_DATABASE_ADAPTERS = {'default': 'south.db.mysql'}
     PICASA_ALBUM_NAME = '/snr_images-prod'
 else:
     # Running in development, so use a local MySQL database.
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-            'NAME': 'clothes',  # Or path to database file if using sqlite3.
-            'USER': 'clothes_dev',  # Not used with sqlite3.
-            'PASSWORD': 'clothes_dev',  # Not used with sqlite3.
-            'HOST': 'shady.akwire.lan',  # Set to empty string for localhost. Not used with sqlite3.
-            'PORT': '',  # Set to empty string for default. Not used with sqlite3.
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'clothes',
+            'USER': 'clothes_dev',
+            'PASSWORD': 'clothes_dev',
+            'HOST': 'shady.akwire.lan',
+            'PORT': '',
         }
     }
     PICASA_ALBUM_NAME = '/snr_images-test'
@@ -98,7 +98,6 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -108,7 +107,6 @@ SECRET_KEY = 'k5(llw-xo7u5ayouwu46q_9h#w-x__vbz0f7c2n(ma+f=wzg7h'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -122,9 +120,6 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
     os.path.join(ROOT_PATH, 'templates'),
 )
 
@@ -137,16 +132,19 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'polls',
     'clothes',
-    # Uncomment the next line to enable the admin:
-     'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
-    # South DB Migration Tool (easy_install South -- http://south.aeracode.org/)
+    'django.contrib.admin',
+    # South DB Migration Tool (easy_install South --
+    # http://south.aeracode.org/)
     'south',
-    # Autocomplete Light (https://github.com/yourlabs/django-autocomplete-light)
+    # Autocomplete Light
+    # https://github.com/yourlabs/django-autocomplete-light
     'autocomplete_light',
-    # Django-Picasa (http://pypi.python.org/pypi/django-picasa)
+    # Django-Picasa
+    # http://pypi.python.org/pypi/django-picasa
     'picasa',
+    # Django REST Framework
+    # http://django-rest-framework.org/
+    'rest_framework',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -172,14 +170,18 @@ LOGGING = {
     }
 }
 
-FILE_UPLOAD_HANDLERS = ('django.core.files.uploadhandler.MemoryFileUploadHandler',)
+FILE_UPLOAD_HANDLERS = (
+    'django.core.files.uploadhandler.MemoryFileUploadHandler',)
 FILE_UPLOAD_MAX_MEMORY_SIZE = 5 * 2 ** 20  # 5 MiB
 
 PICASA_STORAGE_OPTIONS = {
-  'email':'colleen.michelle.mccloskey@gmail.com',
-  'source':'clothes_site',
-  'password':'pcjnnkwxvhumgskc',
-  'userid':'colleen.michelle.mccloskey@gmail.com',
-  'cache': True
+    'email': 'colleen.michelle.mccloskey@gmail.com',
+    'source': 'clothes_site',
+    'password': 'pcjnnkwxvhumgskc',
+    'userid': 'colleen.michelle.mccloskey@gmail.com',
+    'cache': True
 }
 
+REST_FRAMEWORK = {
+
+}
