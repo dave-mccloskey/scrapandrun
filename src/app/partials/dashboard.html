@@ -1,7 +1,10 @@
 <div class="jumbotron">
-  <h1>Navbar example</h1>
-  <p>This example is a quick exercise to illustrate how the default, static navbar and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
-  <p>
-    <a class="btn btn-large btn-primary" href="../../components/#navbar">View navbar docs &raquo;</a>
-  </p>
+  <h1>Scrap and Run</h1>
+  <p>Some people run. Some people scrapbook. Some people like data. I take it to the next level.</p>
+</div>
+
+<div class="row">
+  <div ng-repeat="article in articles" class="col-md-3">
+    {{ article.name }}
+  </div>
 </div>
