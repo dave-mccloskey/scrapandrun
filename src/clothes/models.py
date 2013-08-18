@@ -4,9 +4,7 @@ from settings import PICASA_ALBUM_NAME
 from django.db import models
 from django.db.models import Sum, Q
 
-import datetime
 import os
-from itertools import ifilterfalse
 
 
 class Store(models.Model):
