@@ -21,7 +21,7 @@ handlers:
 
 - url: /(img|css|js|partials|lib)(.*)
   static_files: app/\1/\2
-  upload: app/\1/.*
+  upload: app/.*
 
 - url: /
   static_files: app/index.html
