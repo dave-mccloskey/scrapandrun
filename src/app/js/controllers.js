@@ -1,7 +1,7 @@
 angular.module('clothes.controllers', ['ngResource'])
     .controller('Dashboard', function($scope, $resource) {
-      this.Article = $resource('/_/clothes_data/articles');
-      $scope.articles = this.Article.get();
+      this.Date = $resource('/_/clothes_data/dates', {page_size: 4});
+      $scope.dates = this.Date.get();
     })
     .controller('MyCtrl2', function($scope) {
       $scope.x = 'test2';
