@@ -8,8 +8,8 @@ libraries:
 - name: django
   version: "1.5"
 
-builtins:
-- django_wsgi: on
+env_variables:
+  DJANGO_SETTINGS_MODULE: 'settings'
 
 handlers:
 - url: /static
@@ -26,3 +26,6 @@ handlers:
 - url: /
   static_files: app/index.html
   upload: app/index.html
+
+- url: /.*
+  script: main.app
