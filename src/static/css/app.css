@@ -1,0 +1,51 @@
+.positioned {
+  position: relative;
+}
+
+.dashboard-date-panel {
+  border: 1px solid #888;
+  border-radius: 5px;
+}
+
+.dashboard-date-date {
+  position: absolute;
+  right: 0;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  left: 0;
+  background: black;
+}
+
+.dashboard-date-month {
+  display: inline-block;
+  vertical-align: baseline;
+  width: 100%;
+  position: absolute;
+  font-size: 5em;
+  margin-top: -20px;
+  color: white;
+  color: rgba(255, 255, 255, 0.5);
+  -webkit-filter: blur(1px);
+  -webkit-text-stroke: 0.5px black;
+  overflow: hidden;
+}
+
+.dashboard-date-day {
+  font-size: 5em;
+  display: inline-block;
+  vertical-align: baseline;
+  position: absolute;
+  right: 0;
+  margin-top: -15px;
+  padding-right: 3px;
+  text-shadow: black 0 2px 4px;
+}
+
+.dashboard-date-img {
+  max-height: 200px;
+  max-width: 100%;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+* { xbox-shadow: inset 0 0 0 1px red; }

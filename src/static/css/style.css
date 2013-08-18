@@ -1,0 +1,117 @@
+
+/* Jumbotrons
+-------------------------------------------------- */
+.jumbotron {
+  position: relative;
+}
+.jumbotron h1 {
+  margin-bottom: 9px;
+  font-size: 81px;
+  letter-spacing: -1px;
+  line-height: 1;
+}
+.jumbotron p {
+  margin-bottom: 18px;
+  font-weight: 300;
+}
+.jumbotron .btn-large {
+  font-size: 20px;
+  font-weight: normal;
+  padding: 14px 24px;
+  margin-right: 10px;
+  -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+          border-radius: 6px;
+}
+
+/* Masthead (docs home) */
+.masthead {
+  padding-top: 36px;
+  margin-bottom: 72px;
+}
+.masthead h1,
+.masthead p {
+  text-align: center;
+}
+.masthead h1 {
+  margin-bottom: 18px;
+}
+.masthead p {
+  margin-left: 5%;
+  margin-right: 5%;
+  font-size: 30px;
+  line-height: 36px;
+}
+
+/* ------------- Calendar --------------------- */
+
+#calendar table {
+    margin: 0px auto;
+    width: 100%;
+}
+
+#calendar td {
+    border: 1px solid black;
+    height: 10em;
+    vertical-align: top;
+    width: 14.286%
+}
+
+#calendar div.date {
+}
+
+div.othermonth {
+  color: #ccc;
+  background: rgba(0, 0, 255, 0.03);
+}
+
+#calendar h2 {
+  display: inline;
+}
+
+#changers {
+  float: right;
+}
+
+#changers a {
+  background-color: #333;
+  color: #ccc;
+  cursor: default;
+  display: inline-block;
+  border-radius: 2px;
+  width: 5em;
+  margin: .3em;
+  border: 1px solid black;
+  text-align: center;
+}
+
+#changers a:hover {
+  border: 1px solid #bbb;
+  text-decoration: none;
+  background-position: left -78px;
+}
+
+.calendarCellWrap {
+  position: relative;
+  height: 100%;
+}
+
+.calendarPopup {
+  display: block;
+  min-width: 300px;
+  min-height: 100px;
+  background: rgba(20, 20, 100, 0.95);
+  border-radius: 15px;
+  padding: 15px;
+  border: 2px solid white;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+  color: white;
+}
+
+.calendarPopupHeading {
+  color: rgb(240, 37, 37);
+}
+
+.calendarPopup a {
+  color: #ccc;
+}
