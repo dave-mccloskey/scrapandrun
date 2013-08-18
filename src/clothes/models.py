@@ -2,11 +2,12 @@ from picasa import PicasaField
 from settings import PICASA_ALBUM_NAME
 
 from django.db import models
-from django.db.models import Sum, Q, F
-from django.core.exceptions import ValidationError
+from django.db.models import Sum, Q
 
-import datetime, os
-from itertools import chain, ifilterfalse
+import datetime
+import os
+from itertools import ifilterfalse
+
 
 class Store(models.Model):
     name = models.CharField(max_length=50)
@@ -59,19 +60,20 @@ class Article(models.Model):
     name = models.CharField(max_length=200)
     purchase_date = models.DateField('date purchased')
     color = models.ManyToManyField(Color, related_name='articles')
-    article_type = models.ForeignKey(ArticleType, verbose_name='type', related_name='articles')
+    article_type = models.ForeignKey(
+        ArticleType, verbose_name='type', related_name='articles')
     cost = models.DecimalField(max_digits=6, decimal_places=2)
     size = models.CharField(max_length=30)
-    purchase_location = models.ForeignKey(Store, verbose_name='purchase location',
+    purchase_location = models.ForeignKey(
+        Store, verbose_name='purchase location',
         related_name='articles', on_delete=models.PROTECT)
 
     class Meta:
         ordering = ['name']
 
-
     def worn_with(self):
         articles = (Article.objects.filter(outfits__articles__id=self.id) |
-            Article.objects.filter(accessorized_outfits__articles__id=self.id))
+                    Article.objects.filter(accessorized_outfits__articles__id=self.id))
         return articles.distinct().exclude(id=self.id).order_by('name')
 
     def bought_on_or_before(self, date):
@@ -93,13 +95,14 @@ class Outfit(models.Model):
 
 class AccessorizedOutfit(models.Model):
     base_outfit = models.ForeignKey(Outfit, verbose_name='base outfit',
-        related_name='accessorized_outfits')
-    articles = models.ManyToManyField(Article, related_name='accessorized_outfits',
+                                    related_name='accessorized_outfits')
+    articles = models.ManyToManyField(
+        Article, related_name='accessorized_outfits',
         verbose_name='accessories', blank=True)
 
     def cost(self):
         return (self.base_outfit.articles.aggregate(Sum('cost'))['cost__sum'] +
-          self.articles.aggregate(Sum('cost'))['cost__sum'])
+                self.articles.aggregate(Sum('cost'))['cost__sum'])
 
     def all_articles(self):
         articles = []
@@ -113,7 +116,9 @@ class AccessorizedOutfit(models.Model):
 
 class Date(models.Model):
     date = models.DateField('date', unique=True)
-    outfits_worn = models.ManyToManyField(AccessorizedOutfit, related_name='dates_worn',
+    outfits_worn = models.ManyToManyField(
+        AccessorizedOutfit,
+        related_name='dates_worn',
         through='OutfitWearingProperties')
 
     class Meta:
@@ -121,19 +126,19 @@ class Date(models.Model):
 
     def all_articles(self):
         return (Article.objects.filter(
-          Q(outfits__accessorized_outfits__dates_worn=self) |
-          Q(accessorized_outfits__dates_worn=self)))
+                Q(outfits__accessorized_outfits__dates_worn=self) |
+                Q(accessorized_outfits__dates_worn=self)))
 
     def outfit_ids(self):
-      aoutfits = (AccessorizedOutfit.objects.filter(dates_worn=self))
-      return ', '.join([str(aoutfit.id) for aoutfit in aoutfits])
+        aoutfits = (AccessorizedOutfit.objects.filter(dates_worn=self))
+        return ', '.join([str(aoutfit.id) for aoutfit in aoutfits])
 
     def first_outfit_photo(self):
-      props = (OutfitWearingProperties.objects.filter(date=self))
-      for prop in props:
-        if prop.photo:
-          return prop.photo
-      return None
+        props = (OutfitWearingProperties.objects.filter(date=self))
+        for prop in props:
+            if prop.photo:
+                return prop.photo
+        return None
 
     def articles_bought_before_worn(self):
         l = (lambda article: article.bought_on_or_before(self.date))
@@ -147,12 +152,12 @@ class Date(models.Model):
 
 
 class OutfitWearingProperties(models.Model):
-  def pathFor(owp, filename):
-     album = PICASA_ALBUM_NAME + '-' + str(owp.date.date.year)
-     return os.path.join(album, filename)
 
-  date = models.ForeignKey(Date)
-  accessorizedoutfit = models.ForeignKey(AccessorizedOutfit)
-  photo = PicasaField(upload_to=pathFor, max_length=300,
-      null=True, blank=True)
+    def pathFor(owp, filename):
+        album = PICASA_ALBUM_NAME + '-' + str(owp.date.date.year)
+        return os.path.join(album, filename)
 
+    date = models.ForeignKey(Date)
+    accessorizedoutfit = models.ForeignKey(AccessorizedOutfit)
+    photo = PicasaField(upload_to=pathFor, max_length=300,
+                        null=True, blank=True)
