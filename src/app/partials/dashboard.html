@@ -4,8 +4,15 @@
 </div>
 
 <div class="row">
-  <div ng-repeat="date in dates.results" class="col-md-3">
-    {{ date.date }}
-    <img ng-src="{{ date.photo }}">
+  <div ng-repeat="date in dates.results" class="col-md-3 positioned">
+    <div class="dashboard-date-panel positioned">
+      <div class="dashboard-date-date">
+        <div class="dashboard-date-month">{{ date.date | date:'MMMM' }}</div>
+        <div class="dashboard-date-day">{{ date.date | date:'dd' }}</div>
+      </div>
+      <div class="dashboard-date-img text-center">
+        <img class="" ng-src="{{ date.photo }}">
+      </div>
+    </div>
   </div>
 </div>
