@@ -8,7 +8,8 @@ angular.module('clothes.controllers', ['ngResource'])
       var yearmonth = $routeParams.yearmonth || moment().format('YYYYMM');
       $scope.date = moment(yearmonth, 'YYYYMM').toDate();
 
-      this.Date = $resource('/_/clothes_data/dates/', {yearmonth: yearmonth});
+      this.Date = $resource('/_/clothes_data/dates/',
+        {yearmonth: yearmonth, page_size: 31});
       var datesWithData = this.Date.get(function() {
         var firstday = moment().startOf('month').startOf('week');
         var lastday = moment().endOf('month').endOf('week');
