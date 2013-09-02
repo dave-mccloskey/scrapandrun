@@ -3,8 +3,11 @@ angular.module('clothes.controllers', ['ngResource'])
       this.Date = $resource('/_/clothes_data/dates/', {page_size: 4});
       $scope.dates = this.Date.get();
     })
-    .controller('Calendar', function($scope, $resource, $location) {
-      var yearmonth = moment().format('YYYYMM');
+    .controller('Calendar', function($scope, $resource, $location,
+        $routeParams) {
+      var yearmonth = $routeParams.yearmonth || moment().format('YYYYMM');
+      $scope.date = moment(yearmonth, 'YYYYMM').toDate();
+
       this.Date = $resource('/_/clothes_data/dates/', {yearmonth: yearmonth});
       var datesWithData = this.Date.get(function() {
         var firstday = moment().startOf('month').startOf('week');

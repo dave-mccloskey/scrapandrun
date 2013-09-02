@@ -4,9 +4,11 @@ angular.module('clothes', ['clothes.controllers',
           'link'
     ])
     .config(['$routeProvider', function($routeProvider) {
-        $routeProvider.when('/dashboard',
+        $routeProvider.when('/dashboard/',
             {templateUrl: 'partials/dashboard.html', controller: 'Dashboard'});
-        $routeProvider.when('/calendar',
+        $routeProvider.when('/calendar/',
+            {redirectTo: '/calendar/' + moment().format('YYYYMM')});
+        $routeProvider.when('/calendar/:yearmonth/',
             {templateUrl: 'partials/calendar.html', controller: 'Calendar'});
         $routeProvider.otherwise({redirectTo: '/dashboard'});
       }]);
