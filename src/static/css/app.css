@@ -1,3 +1,5 @@
+* { xbox-shadow: inset 0 0 0 1px red; }
+
 .positioned {
   position: relative;
 }
@@ -48,4 +50,20 @@
   border-radius: 4px;
 }
 
-* { xbox-shadow: inset 0 0 0 1px red; }
+/* --- Calendar --- */
+
+.calendar {
+}
+
+.calendar thead {
+  text-align: center;
+}
+
+.calendar td {
+  width: 14.286%;
+}
+
+.calendar img {
+  width: 100%;
+  height: auto;
+}

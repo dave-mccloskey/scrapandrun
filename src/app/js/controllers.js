@@ -3,6 +3,6 @@ angular.module('clothes.controllers', ['ngResource'])
       this.Date = $resource('/_/clothes_data/dates/', {page_size: 4});
       $scope.dates = this.Date.get();
     })
-    .controller('MyCtrl2', function($scope) {
-      $scope.x = 'test2';
+    .controller('Calendar', function($scope, $resource) {
+
     });
