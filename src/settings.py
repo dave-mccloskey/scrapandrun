@@ -2,6 +2,7 @@
 import os
 
 DEBUG = True
+FORCE_PROD = False
 TEMPLATE_DEBUG = DEBUG
 ROOT_PATH = os.path.dirname(__file__)
 
@@ -11,8 +12,8 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-if (os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine') or
-        os.getenv('SETTINGS_MODE') == 'prod'):
+if (os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine')
+    or FORCE_PROD):
     # Running on production App Engine, so use a Google Cloud SQL database.
     DATABASES = {
         'default': {
@@ -155,9 +156,15 @@ INSTALLED_APPS = (
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'filters': {
+         'require_debug_false': {
+             '()': 'django.utils.log.RequireDebugFalse'
+         }
+     },
     'handlers': {
         'mail_admins': {
             'level': 'ERROR',
+            'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
         }
     },
