@@ -6,13 +6,14 @@ angular.module('clothes.controllers', ['ngResource'])
     .controller('Calendar', function($scope, $resource, $location,
         $routeParams) {
       var yearmonth = $routeParams.yearmonth || moment().format('YYYYMM');
-      $scope.date = moment(yearmonth, 'YYYYMM').toDate();
+      var date = moment(yearmonth, 'YYYYMM');
+      $scope.date = date.clone().toDate();
 
       this.Date = $resource('/_/clothes_data/dates/',
         {yearmonth: yearmonth, page_size: 31});
       var datesWithData = this.Date.get(function() {
-        var firstday = moment().startOf('month').startOf('week');
-        var lastday = moment().endOf('month').endOf('week');
+        var firstday = date.clone().startOf('month').startOf('week');
+        var lastday = date.clone().endOf('month').endOf('week');
 
         // dates is a hash from unix timestamp to { date: foo }
         var dates = {};
