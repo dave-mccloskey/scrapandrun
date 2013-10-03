@@ -1,3 +1,5 @@
+import logging
+
 from django.conf.urls.defaults import *
 from clothes.models import *
 
@@ -34,6 +36,23 @@ class DateViewSet(viewsets.ReadOnlyModelViewSet):
     paginate_by = 10
     paginate_by_param = 'page_size'
     serializer_class = DateSerializer
+
+    def get_queryset(self):
+        """
+        Optionally restricts the returned dates to a year and month.
+        """
+        queryset = Date.objects.all()
+
+        yearmonth = self.request.QUERY_PARAMS.get('yearmonth', None)
+        if yearmonth is not None:
+            year = int(yearmonth[:4])
+            month = int(yearmonth[4:])
+            logging.info('Filtering dates to %s, %s', year, month)
+            queryset = (queryset
+                .filter(date__year=year)
+                .filter(date__month=month))
+
+        return queryset
 
 
 # Routers provide an easy way of automatically determining the URL conf

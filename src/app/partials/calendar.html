@@ -1,1 +1,24 @@
-<p>Calendar</p>
+<header><h1>{{ date | date:'MMMM yyyy' }}</h1></header>
+
+<div class="table-responsive">
+<table class="table table-condensed table-bordered calendar">
+  <thead>
+    <tr>
+      <td>S</td>
+      <td>M</td>
+      <td>T</td>
+      <td>W</td>
+      <td>T</td>
+      <td>F</td>
+      <td>S</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="week in weeks">
+      <td ng-repeat="date in dates | week:week">
+        <img ng-src="{{date.photo}}">
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
