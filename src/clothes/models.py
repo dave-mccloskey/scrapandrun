@@ -151,11 +151,12 @@ class Date(models.Model):
 
 class OutfitWearingProperties(models.Model):
 
-    def pathFor(owp, filename):
-        album = PICASA_ALBUM_NAME + '-' + str(owp.date.date.year)
+    def pathForUploading(owp, filename):
+        album = (PICASA_ALBUM_NAME + '-' + str(owp.date.date.year) +
+            str(owp.date.date.month))
         return os.path.join(album, filename)
 
     date = models.ForeignKey(Date)
     accessorizedoutfit = models.ForeignKey(AccessorizedOutfit)
-    photo = PicasaField(upload_to=pathFor, max_length=300,
+    photo = PicasaField(upload_to=pathForUploading, max_length=300,
                         null=True, blank=True)
